@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cadastre-se como doador ou voluntário do Instituto Ponte Digital e apoie a formação de jovens em tecnologia.">
+  <title>Seja apoiador | Instituto Ponte Digital</title>
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.svg" alt="Instituto Ponte Digital" width="48" height="48">
+      <span class="brand-name">Instituto Ponte Digital</span>
+    </a>
+
+    <nav aria-label="Navegação principal">
+      <ul class="menu">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="projetos.html">Projetos sociais</a></li>
+        <li><a href="cadastro.html" aria-current="page">Seja apoiador</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section aria-labelledby="titulo-cadastro">
+      <h1 id="titulo-cadastro">Cadastro de doadores e voluntários</h1>
+      <p>
+        Preencha os dados abaixo para apoiar o Instituto Ponte Digital. Os campos marcados com
+        asterisco (<abbr title="campo obrigatório">*</abbr>) são obrigatórios. Seus dados são usados
+        apenas para contato institucional e emissão de recibo, conforme a Lei Geral de Proteção de Dados.
+      </p>
+    </section>
+
+    <section aria-labelledby="form-titulo">
+      <h2 id="form-titulo">Formulário de apoio</h2>
+
+      <!--
+        Validação inteiramente nativa: required, type, pattern, minlength/maxlength, min/max e step.
+        O arquivo assets/js/mascaras.js apenas formata a digitação de CPF, telefone e CEP;
+        quem barra o envio é o próprio navegador, a partir dos atributos abaixo.
+      -->
+      <form action="#" method="post" id="form-apoio">
+
+        <!-- GRUPO 1 - quem é a pessoa -->
+        <fieldset>
+          <legend>Identificação</legend>
+
+          <div class="campo">
+            <label for="nome">Nome completo <abbr title="campo obrigatório">*</abbr></label>
+            <input type="text" id="nome" name="nome"
+                   required minlength="6" maxlength="80"
+                   autocomplete="name"
+                   placeholder="Maria Aparecida da Silva"
+                   aria-describedby="nome-ajuda">
+            <small id="nome-ajuda" class="hint">Informe nome e sobrenome, como no documento oficial.</small>
+          </div>
+
+          <div class="campo">
+            <label for="cpf">CPF <abbr title="campo obrigatório">*</abbr></label>
+            <input type="text" id="cpf" name="cpf"
+                   required maxlength="14"
+                   inputmode="numeric"
+                   pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                   placeholder="000.000.000-00"
+                   title="Informe o CPF no formato 000.000.000-00"
+                   autocomplete="off"
+                   aria-describedby="cpf-ajuda">
+            <small id="cpf-ajuda" class="hint">Digite apenas números: pontos e traço são inseridos automaticamente.</small>
+          </div>
+
+          <div class="campo">
+            <label for="nascimento">Data de nascimento <abbr title="campo obrigatório">*</abbr></label>
+            <input type="date" id="nascimento" name="nascimento"
+                   required
+                   min="1920-01-01" max="2008-09-12"
+                   autocomplete="bday"
+                   aria-describedby="nascimento-ajuda">
+            <small id="nascimento-ajuda" class="hint">É necessário ter 18 anos completos para se cadastrar.</small>
+          </div>
+        </fieldset>
+
+        <!-- GRUPO 2 - por onde falar com a pessoa -->
+        <fieldset>
+          <legend>Contato</legend>
+
+          <div class="campo">
+            <label for="email">E-mail <abbr title="campo obrigatório">*</abbr></label>
+            <input type="email" id="email" name="email"
+                   required maxlength="100"
+                   autocomplete="email"
+                   placeholder="voce@exemplo.com.br"
+                   aria-describedby="email-ajuda">
+            <small id="email-ajuda" class="hint">Usado para confirmar o cadastro e enviar o recibo da doação.</small>
+          </div>
+
+          <div class="campo">
+            <label for="telefone">Telefone celular <abbr title="campo obrigatório">*</abbr></label>
+            <input type="tel" id="telefone" name="telefone"
+                   required maxlength="15"
+                   inputmode="tel"
+                   pattern="\(\d{2}\) \d{5}-\d{4}"
+                   placeholder="(19) 90000-0000"
+                   title="Informe o celular com DDD, no formato (00) 00000-0000"
+                   autocomplete="tel"
+                   aria-describedby="telefone-ajuda">
+            <small id="telefone-ajuda" class="hint">Somente números; o DDD e a formatação são aplicados automaticamente.</small>
+          </div>
+
+          <div class="campo campo-inline">
+            <input type="checkbox" id="whatsapp" name="whatsapp" value="sim">
+            <label for="whatsapp">Este número também recebe mensagens no WhatsApp</label>
+          </div>
+        </fieldset>
+
+        <!-- GRUPO 3 - onde a pessoa está (define o núcleo de atuação) -->
+        <fieldset>
+          <legend>Endereço</legend>
+
+          <div class="campo">
+            <label for="cep">CEP <abbr title="campo obrigatório">*</abbr></label>
+            <input type="text" id="cep" name="cep"
+                   required maxlength="9"
+                   inputmode="numeric"
+                   pattern="\d{5}-\d{3}"
+                   placeholder="00000-000"
+                   title="Informe o CEP no formato 00000-000"
+                   autocomplete="postal-code"
+                   aria-describedby="cep-ajuda">
+            <small id="cep-ajuda" class="hint">Oito dígitos; o traço é inserido automaticamente.</small>
+          </div>
+
+          <div class="campo">
+            <label for="logradouro">Logradouro <abbr title="campo obrigatório">*</abbr></label>
+            <input type="text" id="logradouro" name="logradouro"
+                   required maxlength="120"
+                   autocomplete="address-line1"
+                   placeholder="Rua das Acácias">
+          </div>
+
+          <div class="campo">
+            <label for="numero">Número <abbr title="campo obrigatório">*</abbr></label>
+            <input type="text" id="numero" name="numero"
+                   required maxlength="10"
+                   autocomplete="address-line2"
+                   placeholder="210 ou S/N"
+                   aria-describedby="numero-ajuda">
+            <small id="numero-ajuda" class="hint">Aceita letras, porque endereços podem ser "120A" ou "S/N".</small>
+          </div>
+
+          <div class="campo">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="complemento"
+                   maxlength="60"
+                   placeholder="Apartamento 32, bloco B">
+          </div>
+
+          <div class="campo">
+            <label for="bairro">Bairro <abbr title="campo obrigatório">*</abbr></label>
+            <input type="text" id="bairro" name="bairro"
+                   required maxlength="60"
+                   autocomplete="address-level3">
+          </div>
+
+          <div class="campo">
+            <label for="cidade">Cidade <abbr title="campo obrigatório">*</abbr></label>
+            <input type="text" id="cidade" name="cidade"
+                   required maxlength="60"
+                   autocomplete="address-level2"
+                   list="cidades-atendidas">
+            <datalist id="cidades-atendidas">
+              <option value="Campinas"></option>
+              <option value="Hortolândia"></option>
+              <option value="Sumaré"></option>
+              <option value="Valinhos"></option>
+            </datalist>
+          </div>
+
+          <div class="campo">
+            <label for="estado">Estado <abbr title="campo obrigatório">*</abbr></label>
+            <select id="estado" name="estado" required autocomplete="address-level1">
+              <option value="">Selecione a unidade federativa</option>
+              <option value="AC">Acre</option>
+              <option value="AL">Alagoas</option>
+              <option value="AP">Amapá</option>
+              <option value="AM">Amazonas</option>
+              <option value="BA">Bahia</option>
+              <option value="CE">Ceará</option>
+              <option value="DF">Distrito Federal</option>
+              <option value="ES">Espírito Santo</option>
+              <option value="GO">Goiás</option>
+              <option value="MA">Maranhão</option>
+              <option value="MT">Mato Grosso</option>
+              <option value="MS">Mato Grosso do Sul</option>
+              <option value="MG">Minas Gerais</option>
+              <option value="PA">Pará</option>
+              <option value="PB">Paraíba</option>
+              <option value="PR">Paraná</option>
+              <option value="PE">Pernambuco</option>
+              <option value="PI">Piauí</option>
+              <option value="RJ">Rio de Janeiro</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="RS">Rio Grande do Sul</option>
+              <option value="RO">Rondônia</option>
+              <option value="RR">Roraima</option>
+              <option value="SC">Santa Catarina</option>
+              <option value="SP">São Paulo</option>
+              <option value="SE">Sergipe</option>
+              <option value="TO">Tocantins</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <!-- GRUPO 4 - o que a pessoa quer fazer; contém dois subgrupos de escolha -->
+        <fieldset>
+          <legend>Forma de apoio</legend>
+
+          <!-- fieldset aninhado: o grupo de radios precisa de rótulo próprio -->
+          <fieldset id="tipo-apoio" class="grupo-opcoes">
+            <legend>Quero atuar como <abbr title="campo obrigatório">*</abbr></legend>
+
+            <div class="campo-inline">
+              <input type="radio" id="apoio-doador" name="tipo-apoio" value="doador" required>
+              <label for="apoio-doador">Doador</label>
+            </div>
+
+            <div class="campo-inline">
+              <input type="radio" id="apoio-voluntario" name="tipo-apoio" value="voluntario">
+              <label for="apoio-voluntario">Voluntário</label>
+            </div>
+
+            <div class="campo-inline">
+              <input type="radio" id="apoio-ambos" name="tipo-apoio" value="ambos">
+              <label for="apoio-ambos">Doador e voluntário</label>
+            </div>
+          </fieldset>
+
+          <div class="campo">
+            <label for="projeto">Projeto de interesse</label>
+            <select id="projeto" name="projeto">
+              <option value="">Onde for mais necessário</option>
+              <option value="codigo-na-quebrada">Código na Quebrada</option>
+              <option value="dados-que-transformam">Dados que Transformam</option>
+              <option value="maes-conectadas">Mães Conectadas</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="valor">Valor da doação mensal (R$)</label>
+            <input type="number" id="valor" name="valor"
+                   min="20" max="5000" step="10"
+                   placeholder="50"
+                   aria-describedby="valor-ajuda">
+            <small id="valor-ajuda" class="hint">Valor mínimo de R$ 20, em múltiplos de R$ 10. Deixe em branco se for voluntário.</small>
+          </div>
+
+          <div class="campo">
+            <label for="horas">Horas semanais disponíveis para voluntariado</label>
+            <input type="number" id="horas" name="horas"
+                   min="2" max="20" step="1"
+                   placeholder="4"
+                   aria-describedby="horas-ajuda">
+            <small id="horas-ajuda" class="hint">Entre 2 e 20 horas. Deixe em branco se for apenas doador.</small>
+          </div>
+
+          <div class="campo">
+            <label for="inicio">Disponível a partir de</label>
+            <input type="date" id="inicio" name="inicio" min="2026-09-12">
+          </div>
+
+          <fieldset class="grupo-opcoes">
+            <legend>Frentes de interesse</legend>
+
+            <div class="campo-inline">
+              <input type="checkbox" id="frente-mentoria" name="frentes" value="mentoria">
+              <label for="frente-mentoria">Mentoria técnica</label>
+            </div>
+
+            <div class="campo-inline">
+              <input type="checkbox" id="frente-pedagogico" name="frentes" value="pedagogico">
+              <label for="frente-pedagogico">Apoio pedagógico em sala</label>
+            </div>
+
+            <div class="campo-inline">
+              <input type="checkbox" id="frente-entrevistas" name="frentes" value="entrevistas">
+              <label for="frente-entrevistas">Preparação para entrevistas</label>
+            </div>
+
+            <div class="campo-inline">
+              <input type="checkbox" id="frente-acolhimento" name="frentes" value="acolhimento">
+              <label for="frente-acolhimento">Acolhimento infantil</label>
+            </div>
+          </fieldset>
+
+          <div class="campo">
+            <label for="linkedin">Perfil profissional (LinkedIn ou site)</label>
+            <input type="url" id="linkedin" name="linkedin"
+                   maxlength="200"
+                   placeholder="https://www.linkedin.com/in/seu-perfil"
+                   aria-describedby="linkedin-ajuda">
+            <small id="linkedin-ajuda" class="hint">Opcional. Inclua o endereço completo, começando com https://</small>
+          </div>
+
+          <div class="campo">
+            <label for="mensagem">Como você gostaria de contribuir?</label>
+            <textarea id="mensagem" name="mensagem" rows="4" maxlength="500"
+                      aria-describedby="mensagem-ajuda"></textarea>
+            <small id="mensagem-ajuda" class="hint">Até 500 caracteres.</small>
+          </div>
+        </fieldset>
+
+        <!-- GRUPO 5 - acesso ao portal do apoiador -->
+        <fieldset>
+          <legend>Acesso ao portal do apoiador</legend>
+
+          <div class="campo">
+            <label for="senha">Senha <abbr title="campo obrigatório">*</abbr></label>
+            <input type="password" id="senha" name="senha"
+                   required minlength="8" maxlength="32"
+                   pattern="(?=.*[A-Za-z])(?=.*\d).{8,32}"
+                   autocomplete="new-password"
+                   title="Mínimo de 8 caracteres, com pelo menos uma letra e um número"
+                   aria-describedby="senha-ajuda">
+            <small id="senha-ajuda" class="hint">Mínimo de 8 caracteres, com ao menos uma letra e um número.</small>
+          </div>
+        </fieldset>
+
+        <!-- GRUPO 6 - base legal do tratamento dos dados -->
+        <fieldset>
+          <legend>Consentimento</legend>
+
+          <div class="campo-inline">
+            <input type="checkbox" id="lgpd" name="lgpd" value="aceito" required>
+            <label for="lgpd">
+              Autorizo o uso dos meus dados para contato institucional e emissão de recibo
+              <abbr title="campo obrigatório">*</abbr>
+            </label>
+          </div>
+
+          <div class="campo-inline">
+            <input type="checkbox" id="newsletter" name="newsletter" value="sim">
+            <label for="newsletter">Quero receber o boletim trimestral de resultados</label>
+          </div>
+        </fieldset>
+
+        <div class="acoes">
+          <button type="submit">Enviar cadastro</button>
+          <button type="reset">Limpar formulário</button>
+        </div>
+
+      </form>
+    </section>
+
+    <aside aria-labelledby="duvidas">
+      <h2 id="duvidas">Dúvidas sobre o cadastro</h2>
+      <p>
+        Escreva para <a href="mailto:apoio@pontedigital.org.br">apoio@pontedigital.org.br</a>
+        ou ligue para (19) 3200-0000, de segunda a sexta, das 9h às 18h.
+      </p>
+    </aside>
+
+  </main>
+
+  <footer class="site-footer">
+    <h2 class="visually-hidden">Informações institucionais</h2>
+
+    <address>
+      Instituto Ponte Digital — CNPJ 12.345.678/0001-90<br>
+      Rua das Acácias, 210 — Jardim São Marcos, Campinas/SP, CEP 13082-000<br>
+      Telefone: <a href="tel:+551932000000">(19) 3200-0000</a> —
+      E-mail: <a href="mailto:contato@pontedigital.org.br">contato@pontedigital.org.br</a>
+    </address>
+
+    <nav aria-label="Navegação do rodapé">
+      <ul class="menu">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="projetos.html">Projetos sociais</a></li>
+        <li><a href="cadastro.html">Seja apoiador</a></li>
+      </ul>
+    </nav>
+
+    <p><small>&copy; 2026 Instituto Ponte Digital. Organização da sociedade civil sem fins lucrativos.</small></p>
+  </footer>
+
+  <script src="assets/js/mascaras.js"></script>
+
+</body>
+</html>
