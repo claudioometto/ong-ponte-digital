@@ -1,0 +1,258 @@
+/* Instituto Ponte Digital — estilos base
+   Etapa 1: apenas legibilidade e evidência da estrutura semântica.
+   O foco da avaliação é o HTML; o CSS aqui é intencionalmente enxuto. */
+
+:root {
+  --azul: #1d4ed8;
+  --texto: #1e293b;
+  --suave: #64748b;
+  --borda: #e2e8f0;
+  --fundo: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--texto);
+  background: var(--fundo);
+  line-height: 1.6;
+}
+
+/* Conteúdo visível apenas para leitores de tela */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--borda);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-name { font-weight: 700; }
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a { color: var(--texto); text-decoration: none; }
+.menu a:hover,
+.menu a:focus { text-decoration: underline; }
+.menu a[aria-current="page"] { color: var(--azul); font-weight: 600; }
+
+main {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+main > section,
+main > aside { margin-bottom: 3rem; }
+
+h1 { font-size: 2rem; line-height: 1.25; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+h4 { font-size: 1rem; margin-bottom: 0.25rem; color: var(--suave); }
+
+.hero p { font-size: 1.05rem; }
+
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.25rem;
+  background: var(--azul);
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card,
+.projeto {
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Imagens nunca ultrapassam o contêiner; height auto preserva a proporção.
+   Os atributos width/height no HTML reservam o espaço e evitam salto de layout. */
+img { max-width: 100%; height: auto; }
+
+.hero-img { border-radius: 10px; margin-top: 1rem; }
+
+figure { margin: 0 0 1rem; }
+figure img { border-radius: 6px; }
+figcaption { font-size: 0.875rem; color: var(--suave); }
+
+aside {
+  border-left: 4px solid var(--azul);
+  padding-left: 1.25rem;
+}
+
+fieldset {
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.25rem;
+}
+
+legend { font-weight: 600; padding: 0 0.35rem; }
+
+label { display: inline-block; margin-bottom: 0.25rem; font-size: 0.95rem; }
+
+input, select, textarea {
+  display: block;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  font: inherit;
+}
+
+input[type="checkbox"] { display: inline-block; width: auto; }
+
+button {
+  padding: 0.7rem 1.25rem;
+  border: 1px solid var(--azul);
+  border-radius: 8px;
+  background: var(--azul);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button[type="reset"] { background: transparent; color: var(--azul); }
+
+.site-footer {
+  border-top: 1px solid var(--borda);
+  padding: 2rem 1.5rem;
+  color: var(--suave);
+  font-size: 0.9rem;
+}
+
+.site-footer a { color: var(--suave); }
+
+@media (max-width: 480px) {
+  .site-header { flex-direction: column; align-items: flex-start; }
+}
+
+/* Índice interno da página de projetos */
+.indice {
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 1rem 1.25rem 1rem 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.indice h2 { margin-top: 0; font-size: 1.1rem; }
+.indice ol { margin: 0; }
+
+/* Tabelas de doação e voluntariado */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+caption {
+  caption-side: bottom;
+  padding-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--suave);
+  text-align: left;
+}
+
+th, td {
+  border: 1px solid var(--borda);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th { background: #f1f5f9; }
+
+/* Lista de definição das dúvidas frequentes */
+dt { font-weight: 600; margin-top: 1rem; }
+dd { margin: 0.25rem 0 0; color: var(--suave); }
+
+/* ---------- Formulário de cadastro ---------- */
+
+.campo { margin-bottom: 1.1rem; }
+
+.campo label { font-weight: 500; }
+
+/* Campos de marcar: rótulo à direita do controle, na mesma linha */
+.campo-inline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.campo-inline label { margin: 0; font-weight: 400; }
+
+/* Texto de apoio associado ao campo por aria-describedby */
+.hint {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.82rem;
+  color: var(--suave);
+}
+
+/* Asterisco de obrigatoriedade: sem sublinhado pontilhado do padrão */
+abbr[title] { text-decoration: none; color: #b91c1c; cursor: help; }
+
+/* Subgrupos de escolha (radio e checkbox) dentro de um fieldset maior */
+.grupo-opcoes {
+  background: #f8fafc;
+  margin-bottom: 1.25rem;
+}
+
+.grupo-opcoes legend { font-weight: 500; font-size: 0.95rem; }
+
+/* Foco sempre visível: navegação por teclado */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 1px;
+}
+
+/* Erro só aparece depois da interação, não em campo ainda intocado */
+input:user-invalid,
+select:user-invalid,
+textarea:user-invalid { border-color: #b91c1c; }
+
+.acoes { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+textarea { resize: vertical; }

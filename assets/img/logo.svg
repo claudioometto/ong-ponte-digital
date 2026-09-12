@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Logotipo Instituto Ponte Digital">
+  <rect width="48" height="48" rx="10" fill="#1d4ed8"/>
+  <path d="M10 30c6-10 22-10 28 0" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <circle cx="10" cy="30" r="4" fill="#fff"/>
+  <circle cx="38" cy="30" r="4" fill="#fff"/>
+</svg>
