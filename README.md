@@ -11,11 +11,15 @@ ong-ponte-digital/
 ├── index.html          Página institucional (apresentação, impacto, contato)
 ├── projetos.html       Projetos sociais, campanhas de doação e voluntariado
 ├── cadastro.html       Formulário de doadores e voluntários
+├── componentes.html    Guia de componentes de feedback (para quem integrar o back-end)
 ├── README.md           Este arquivo
 └── assets/
     ├── css/style.css   Estilos do projeto
     ├── img/            Logotipo (SVG) e fotos (JPG + WebP)
-    └── js/mascaras.js  Máscaras de CPF, telefone e CEP
+    └── js/
+        ├── mascaras.js Máscaras de CPF, telefone e CEP
+        ├── menu.js     Menu hambúrguer e submenu (só alterna aria-expanded)
+        └── feedback.js Toast, modal e resumo de erros (API: PonteFeedback.toast / abrirModal)
 ```
 
 ## Padrões adotados
