@@ -7,6 +7,8 @@
   <title>Instituto Ponte Digital | Educação em tecnologia para a juventude periférica</title>
   <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Marca que o JavaScript está ativo: só então o CSS recolhe o menu -->
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -17,19 +19,37 @@
       <span class="brand-name">Instituto Ponte Digital</span>
     </a>
 
-    <nav aria-label="Navegação principal">
-      <ul class="menu">
+    <nav class="nav-principal" aria-label="Navegação principal">
+      <!-- Botão hambúrguer: aparece só abaixo de 768px e com JavaScript ativo -->
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-icone" aria-hidden="true"></span>
+        Menu
+      </button>
+
+      <ul class="menu" id="menu-principal">
         <li><a href="index.html" aria-current="page">Início</a></li>
-        <li><a href="projetos.html">Projetos sociais</a></li>
+        <li class="tem-submenu">
+          <a href="projetos.html">Projetos sociais</a>
+          <button type="button" class="submenu-botao" aria-expanded="false" aria-controls="submenu-projetos">
+            <span class="visually-hidden">Submenu de Projetos sociais</span>
+          </button>
+          <ul class="submenu" id="submenu-projetos">
+            <li><a href="projetos.html#codigo-na-quebrada">Código na Quebrada</a></li>
+            <li><a href="projetos.html#dados-que-transformam">Dados que Transformam</a></li>
+            <li><a href="projetos.html#maes-conectadas">Mães Conectadas</a></li>
+            <li><a href="projetos.html#doacao">Campanhas de doação</a></li>
+            <li><a href="projetos.html#voluntariado">Frentes de voluntariado</a></li>
+          </ul>
+        </li>
         <li><a href="cadastro.html">Seja apoiador</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
+  <main class="grade">
 
     <!-- Bloco de abertura: h1 único da página -->
-    <section class="hero" aria-labelledby="titulo-principal">
+    <section class="hero grade" aria-labelledby="titulo-principal">
       <h1 id="titulo-principal">Tecnologia que encurta a distância entre a periferia e o primeiro emprego</h1>
       <p>
         O Instituto Ponte Digital forma jovens de 14 a 24 anos das regiões periféricas de Campinas (SP)
@@ -76,7 +96,7 @@
       </ul>
     </section>
 
-    <section aria-labelledby="impacto">
+    <section class="grade cartoes" aria-labelledby="impacto">
       <h2 id="impacto">Nosso impacto em 2025</h2>
 
       <article class="card">
@@ -95,7 +115,7 @@
       </article>
     </section>
 
-    <section aria-labelledby="como-apoiar">
+    <section class="area-principal" aria-labelledby="como-apoiar">
       <h2 id="como-apoiar">Como apoiar</h2>
 
       <h3>Doação recorrente</h3>
@@ -109,7 +129,7 @@
     </section>
 
     <!-- Conteúdo complementar, relacionado mas não essencial à leitura principal -->
-    <aside aria-labelledby="transparencia">
+    <aside class="area-lateral" aria-labelledby="transparencia">
       <!-- Imagem puramente decorativa: alt vazio para o leitor de tela ignorá-la -->
       <img src="assets/img/ornamento.svg" alt="" width="64" height="64">
       <h2 id="transparencia">Transparência</h2>
@@ -121,7 +141,7 @@
 
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer grade">
     <h2 class="visually-hidden">Informações institucionais</h2>
 
     <address>
@@ -136,11 +156,13 @@
         <li><a href="index.html">Início</a></li>
         <li><a href="projetos.html">Projetos sociais</a></li>
         <li><a href="cadastro.html">Seja apoiador</a></li>
+        <li><a href="componentes.html">Guia de componentes</a></li>
       </ul>
     </nav>
 
     <p><small>&copy; 2026 Instituto Ponte Digital. Organização da sociedade civil sem fins lucrativos.</small></p>
   </footer>
 
+  <script src="assets/js/menu.js"></script>
 </body>
 </html>

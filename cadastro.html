@@ -7,6 +7,8 @@
   <title>Seja apoiador | Instituto Ponte Digital</title>
   <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Marca que o JavaScript está ativo: só então o CSS recolhe o menu -->
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -16,16 +18,34 @@
       <span class="brand-name">Instituto Ponte Digital</span>
     </a>
 
-    <nav aria-label="Navegação principal">
-      <ul class="menu">
+    <nav class="nav-principal" aria-label="Navegação principal">
+      <!-- Botão hambúrguer: aparece só abaixo de 768px e com JavaScript ativo -->
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-icone" aria-hidden="true"></span>
+        Menu
+      </button>
+
+      <ul class="menu" id="menu-principal">
         <li><a href="index.html">Início</a></li>
-        <li><a href="projetos.html">Projetos sociais</a></li>
+        <li class="tem-submenu">
+          <a href="projetos.html">Projetos sociais</a>
+          <button type="button" class="submenu-botao" aria-expanded="false" aria-controls="submenu-projetos">
+            <span class="visually-hidden">Submenu de Projetos sociais</span>
+          </button>
+          <ul class="submenu" id="submenu-projetos">
+            <li><a href="projetos.html#codigo-na-quebrada">Código na Quebrada</a></li>
+            <li><a href="projetos.html#dados-que-transformam">Dados que Transformam</a></li>
+            <li><a href="projetos.html#maes-conectadas">Mães Conectadas</a></li>
+            <li><a href="projetos.html#doacao">Campanhas de doação</a></li>
+            <li><a href="projetos.html#voluntariado">Frentes de voluntariado</a></li>
+          </ul>
+        </li>
         <li><a href="cadastro.html" aria-current="page">Seja apoiador</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
+  <main class="grade">
 
     <section aria-labelledby="titulo-cadastro">
       <h1 id="titulo-cadastro">Cadastro de doadores e voluntários</h1>
@@ -36,7 +56,7 @@
       </p>
     </section>
 
-    <section aria-labelledby="form-titulo">
+    <section class="area-principal" aria-labelledby="form-titulo">
       <h2 id="form-titulo">Formulário de apoio</h2>
 
       <!--
@@ -46,8 +66,20 @@
       -->
       <form action="#" method="post" id="form-apoio">
 
+        <div class="alerta alerta--info">
+          <p class="alerta-titulo">Leva cerca de 3 minutos</p>
+          <p>Campos com * são obrigatórios. Nada é enviado antes de você clicar em "Enviar cadastro".</p>
+        </div>
+
+        <!-- Resumo de erros: aparece só após uma tentativa de envio com campos inválidos.
+             role="alert" faz o leitor de tela anunciar o texto assim que ele muda. -->
+        <div class="alerta alerta--erro" id="resumo-erros" role="alert" hidden>
+          <p class="alerta-titulo">Não foi possível enviar</p>
+          <p class="alerta-texto">Alguns campos precisam de correção.</p>
+        </div>
+
         <!-- GRUPO 1 - quem é a pessoa -->
-        <fieldset>
+        <fieldset class="grade">
           <legend>Identificação</legend>
 
           <div class="campo">
@@ -60,7 +92,7 @@
             <small id="nome-ajuda" class="hint">Informe nome e sobrenome, como no documento oficial.</small>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="cpf">CPF <abbr title="campo obrigatório">*</abbr></label>
             <input type="text" id="cpf" name="cpf"
                    required maxlength="14"
@@ -73,7 +105,7 @@
             <small id="cpf-ajuda" class="hint">Digite apenas números: pontos e traço são inseridos automaticamente.</small>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="nascimento">Data de nascimento <abbr title="campo obrigatório">*</abbr></label>
             <input type="date" id="nascimento" name="nascimento"
                    required
@@ -85,10 +117,10 @@
         </fieldset>
 
         <!-- GRUPO 2 - por onde falar com a pessoa -->
-        <fieldset>
+        <fieldset class="grade">
           <legend>Contato</legend>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="email">E-mail <abbr title="campo obrigatório">*</abbr></label>
             <input type="email" id="email" name="email"
                    required maxlength="100"
@@ -98,7 +130,7 @@
             <small id="email-ajuda" class="hint">Usado para confirmar o cadastro e enviar o recibo da doação.</small>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="telefone">Telefone celular <abbr title="campo obrigatório">*</abbr></label>
             <input type="tel" id="telefone" name="telefone"
                    required maxlength="15"
@@ -118,10 +150,10 @@
         </fieldset>
 
         <!-- GRUPO 3 - onde a pessoa está (define o núcleo de atuação) -->
-        <fieldset>
+        <fieldset class="grade">
           <legend>Endereço</legend>
 
-          <div class="campo">
+          <div class="campo campo-terco">
             <label for="cep">CEP <abbr title="campo obrigatório">*</abbr></label>
             <input type="text" id="cep" name="cep"
                    required maxlength="9"
@@ -134,7 +166,7 @@
             <small id="cep-ajuda" class="hint">Oito dígitos; o traço é inserido automaticamente.</small>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-dois-tercos">
             <label for="logradouro">Logradouro <abbr title="campo obrigatório">*</abbr></label>
             <input type="text" id="logradouro" name="logradouro"
                    required maxlength="120"
@@ -142,7 +174,7 @@
                    placeholder="Rua das Acácias">
           </div>
 
-          <div class="campo">
+          <div class="campo campo-terco">
             <label for="numero">Número <abbr title="campo obrigatório">*</abbr></label>
             <input type="text" id="numero" name="numero"
                    required maxlength="10"
@@ -152,21 +184,21 @@
             <small id="numero-ajuda" class="hint">Aceita letras, porque endereços podem ser "120A" ou "S/N".</small>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-dois-tercos">
             <label for="complemento">Complemento</label>
             <input type="text" id="complemento" name="complemento"
                    maxlength="60"
                    placeholder="Apartamento 32, bloco B">
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="bairro">Bairro <abbr title="campo obrigatório">*</abbr></label>
             <input type="text" id="bairro" name="bairro"
                    required maxlength="60"
                    autocomplete="address-level3">
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="cidade">Cidade <abbr title="campo obrigatório">*</abbr></label>
             <input type="text" id="cidade" name="cidade"
                    required maxlength="60"
@@ -180,7 +212,7 @@
             </datalist>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="estado">Estado <abbr title="campo obrigatório">*</abbr></label>
             <select id="estado" name="estado" required autocomplete="address-level1">
               <option value="">Selecione a unidade federativa</option>
@@ -216,7 +248,7 @@
         </fieldset>
 
         <!-- GRUPO 4 - o que a pessoa quer fazer; contém dois subgrupos de escolha -->
-        <fieldset>
+        <fieldset class="grade">
           <legend>Forma de apoio</legend>
 
           <!-- fieldset aninhado: o grupo de radios precisa de rótulo próprio -->
@@ -249,7 +281,7 @@
             </select>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="valor">Valor da doação mensal (R$)</label>
             <input type="number" id="valor" name="valor"
                    min="20" max="5000" step="10"
@@ -258,7 +290,7 @@
             <small id="valor-ajuda" class="hint">Valor mínimo de R$ 20, em múltiplos de R$ 10. Deixe em branco se for voluntário.</small>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="horas">Horas semanais disponíveis para voluntariado</label>
             <input type="number" id="horas" name="horas"
                    min="2" max="20" step="1"
@@ -267,7 +299,7 @@
             <small id="horas-ajuda" class="hint">Entre 2 e 20 horas. Deixe em branco se for apenas doador.</small>
           </div>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="inicio">Disponível a partir de</label>
             <input type="date" id="inicio" name="inicio" min="2026-09-12">
           </div>
@@ -314,10 +346,10 @@
         </fieldset>
 
         <!-- GRUPO 5 - acesso ao portal do apoiador -->
-        <fieldset>
+        <fieldset class="grade">
           <legend>Acesso ao portal do apoiador</legend>
 
-          <div class="campo">
+          <div class="campo campo-metade">
             <label for="senha">Senha <abbr title="campo obrigatório">*</abbr></label>
             <input type="password" id="senha" name="senha"
                    required minlength="8" maxlength="32"
@@ -330,7 +362,7 @@
         </fieldset>
 
         <!-- GRUPO 6 - base legal do tratamento dos dados -->
-        <fieldset>
+        <fieldset class="grade">
           <legend>Consentimento</legend>
 
           <div class="campo-inline">
@@ -345,6 +377,10 @@
             <input type="checkbox" id="newsletter" name="newsletter" value="sim">
             <label for="newsletter">Quero receber o boletim trimestral de resultados</label>
           </div>
+
+          <p class="acao-modal">
+            <button type="button" class="botao-link" data-abre-modal="modal-lgpd">Como usamos seus dados</button>
+          </p>
         </fieldset>
 
         <div class="acoes">
@@ -355,7 +391,7 @@
       </form>
     </section>
 
-    <aside aria-labelledby="duvidas">
+    <aside class="area-lateral lateral-fixa" aria-labelledby="duvidas">
       <h2 id="duvidas">Dúvidas sobre o cadastro</h2>
       <p>
         Escreva para <a href="mailto:apoio@pontedigital.org.br">apoio@pontedigital.org.br</a>
@@ -365,7 +401,7 @@
 
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer grade">
     <h2 class="visually-hidden">Informações institucionais</h2>
 
     <address>
@@ -380,13 +416,45 @@
         <li><a href="index.html">Início</a></li>
         <li><a href="projetos.html">Projetos sociais</a></li>
         <li><a href="cadastro.html">Seja apoiador</a></li>
+        <li><a href="componentes.html">Guia de componentes</a></li>
       </ul>
     </nav>
 
     <p><small>&copy; 2026 Instituto Ponte Digital. Organização da sociedade civil sem fins lucrativos.</small></p>
   </footer>
 
+  <!-- Modal nativo: showModal() prende o foco dentro, Esc fecha e o foco volta ao botão.
+       form method="dialog" fecha a janela sem JavaScript extra. -->
+  <dialog class="modal" id="modal-lgpd" aria-labelledby="modal-lgpd-titulo">
+    <form method="dialog" class="modal-caixa">
+      <div class="modal-cabecalho">
+        <h2 id="modal-lgpd-titulo">Como usamos seus dados</h2>
+        <button class="botao-fechar" value="fechar">
+          <span aria-hidden="true">&times;</span>
+          <span class="visually-hidden">Fechar</span>
+        </button>
+      </div>
+      <div class="modal-corpo">
+        <p>Seguimos a Lei Geral de Proteção de Dados (LGPD). Em resumo:</p>
+        <ul>
+          <li><strong>Para quê:</strong> contato sobre o apoio escolhido e emissão do recibo de doação.</li>
+          <li><strong>Quem acessa:</strong> só a coordenação do instituto. Nada é vendido nem repassado.</li>
+          <li><strong>Por quanto tempo:</strong> enquanto durar o vínculo, ou até você pedir a exclusão.</li>
+          <li><strong>Seus direitos:</strong> consultar, corrigir ou excluir seus dados pelo e-mail privacidade@pontedigital.org.br.</li>
+        </ul>
+      </div>
+      <div class="modal-rodape">
+        <button class="btn btn--primario" value="ok">Entendi</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Região dos toasts: aria-live anuncia cada notificação sem tirar o foco de onde está -->
+  <div class="toasts" aria-live="polite"></div>
+
   <script src="assets/js/mascaras.js"></script>
+  <script src="assets/js/menu.js"></script>
+  <script src="assets/js/feedback.js"></script>
 
 </body>
 </html>

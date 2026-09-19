@@ -7,6 +7,8 @@
   <title>Projetos sociais | Instituto Ponte Digital</title>
   <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Marca que o JavaScript está ativo: só então o CSS recolhe o menu -->
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -16,19 +18,37 @@
       <span class="brand-name">Instituto Ponte Digital</span>
     </a>
 
-    <nav aria-label="Navegação principal">
-      <ul class="menu">
+    <nav class="nav-principal" aria-label="Navegação principal">
+      <!-- Botão hambúrguer: aparece só abaixo de 768px e com JavaScript ativo -->
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-icone" aria-hidden="true"></span>
+        Menu
+      </button>
+
+      <ul class="menu" id="menu-principal">
         <li><a href="index.html">Início</a></li>
-        <li><a href="projetos.html" aria-current="page">Projetos sociais</a></li>
+        <li class="tem-submenu">
+          <a href="projetos.html" aria-current="page">Projetos sociais</a>
+          <button type="button" class="submenu-botao" aria-expanded="false" aria-controls="submenu-projetos">
+            <span class="visually-hidden">Submenu de Projetos sociais</span>
+          </button>
+          <ul class="submenu" id="submenu-projetos">
+            <li><a href="projetos.html#codigo-na-quebrada">Código na Quebrada</a></li>
+            <li><a href="projetos.html#dados-que-transformam">Dados que Transformam</a></li>
+            <li><a href="projetos.html#maes-conectadas">Mães Conectadas</a></li>
+            <li><a href="projetos.html#doacao">Campanhas de doação</a></li>
+            <li><a href="projetos.html#voluntariado">Frentes de voluntariado</a></li>
+          </ul>
+        </li>
         <li><a href="cadastro.html">Seja apoiador</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
+  <main class="grade">
 
     <!-- BLOCO 1 - Abertura: contextualiza a página antes de qualquer detalhe -->
-    <section aria-labelledby="titulo-projetos">
+    <section class="area-principal" aria-labelledby="titulo-projetos">
       <h1 id="titulo-projetos">Projetos sociais</h1>
       <p>
         Três frentes complementares, todas gratuitas para o participante e sustentadas por doações
@@ -38,7 +58,7 @@
     </section>
 
     <!-- BLOCO 2 - Índice interno: atalho para os caminhos possíveis do visitante -->
-    <nav class="indice" aria-labelledby="indice-titulo">
+    <nav class="indice area-lateral" aria-labelledby="indice-titulo">
       <h2 id="indice-titulo">Nesta página</h2>
       <ol>
         <li><a href="#lista-projetos">Iniciativas em andamento</a></li>
@@ -49,11 +69,16 @@
     </nav>
 
     <!-- BLOCO 3 - Iniciativas: cada projeto é um article autocontido -->
-    <section aria-labelledby="lista-projetos">
+    <section class="grade cartoes cartoes-grandes" aria-labelledby="lista-projetos">
       <h2 id="lista-projetos">Iniciativas em andamento</h2>
 
       <article class="projeto" id="codigo-na-quebrada">
         <h3>Código na Quebrada</h3>
+        <ul class="badges" aria-label="Situação do projeto">
+          <li class="badge badge--sucesso">Inscrições abertas</li>
+          <li class="badge">9 meses</li>
+          <li class="badge badge--info">16 a 24 anos</li>
+        </ul>
         <figure>
           <picture>
             <source srcset="assets/img/projeto-1.webp" type="image/webp">
@@ -83,6 +108,11 @@
 
       <article class="projeto" id="dados-que-transformam">
         <h3>Dados que Transformam</h3>
+        <ul class="badges" aria-label="Situação do projeto">
+          <li class="badge badge--aviso">Últimas vagas</li>
+          <li class="badge">6 meses</li>
+          <li class="badge badge--info">18 a 29 anos</li>
+        </ul>
         <figure>
           <picture>
             <source srcset="assets/img/projeto-2.webp" type="image/webp">
@@ -112,6 +142,11 @@
 
       <article class="projeto" id="maes-conectadas">
         <h3>Mães Conectadas</h3>
+        <ul class="badges" aria-label="Situação do projeto">
+          <li class="badge badge--erro">Turma lotada</li>
+          <li class="badge badge--destaque">Acolhimento infantil</li>
+          <li class="badge">Turma noturna</li>
+        </ul>
         <figure>
           <picture>
             <source srcset="assets/img/projeto-3.webp" type="image/webp">
@@ -141,41 +176,49 @@
     </section>
 
     <!-- BLOCO 4 - Doação: o que cada valor custeia e como contribuir -->
-    <section aria-labelledby="doacao">
+    <section class="bloco-par" aria-labelledby="doacao">
       <h2 id="doacao">Campanhas de doação</h2>
       <p>
         Toda doação é direcionada ao custeio direto das turmas. Você pode escolher um projeto específico
         ou deixar que o instituto aplique onde houver maior necessidade no trimestre.
       </p>
 
+      <!-- Alerta estático: informação importante, sem role (não é resposta a uma ação) -->
+      <div class="alerta alerta--aviso">
+        <p class="alerta-titulo">Campanha de inverno: faltam R$ 3.200</p>
+        <p>Até 30 de novembro, esse valor garante o auxílio-transporte de 64 estudantes em dezembro.</p>
+      </div>
+
       <h3>O que cada valor custeia</h3>
-      <table>
-        <caption>Equivalência entre valor doado e custeio mensal por estudante</caption>
-        <thead>
-          <tr>
-            <th scope="col">Valor mensal</th>
-            <th scope="col">Destinação</th>
-            <th scope="col">Alcance</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>R$ 50</td>
-            <td>Auxílio-transporte</td>
-            <td>1 estudante por mês</td>
-          </tr>
-          <tr>
-            <td>R$ 120</td>
-            <td>Material didático e lanche</td>
-            <td>1 turma por semana</td>
-          </tr>
-          <tr>
-            <td>R$ 400</td>
-            <td>Manutenção de notebooks emprestados</td>
-            <td>10 equipamentos por mês</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="tabela-rolagem" role="region" aria-label="Equivalência entre valor doado e custeio mensal por estudante" tabindex="0">
+        <table>
+          <caption>Equivalência entre valor doado e custeio mensal por estudante</caption>
+          <thead>
+            <tr>
+              <th scope="col">Valor mensal</th>
+              <th scope="col">Destinação</th>
+              <th scope="col">Alcance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>R$ 50</td>
+              <td>Auxílio-transporte</td>
+              <td>1 estudante por mês</td>
+            </tr>
+            <tr>
+              <td>R$ 120</td>
+              <td>Material didático e lanche</td>
+              <td>1 turma por semana</td>
+            </tr>
+            <tr>
+              <td>R$ 400</td>
+              <td>Manutenção de notebooks emprestados</td>
+              <td>10 equipamentos por mês</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h3>Formas de contribuir</h3>
       <ul>
@@ -188,7 +231,7 @@
     </section>
 
     <!-- BLOCO 5 - Voluntariado: vagas abertas e o caminho até a primeira atividade -->
-    <section aria-labelledby="voluntariado">
+    <section class="bloco-par" aria-labelledby="voluntariado">
       <h2 id="voluntariado">Frentes de voluntariado</h2>
       <p>
         Não é preciso ser da área de tecnologia. As vagas abaixo estão abertas para o semestre corrente
@@ -196,43 +239,45 @@
       </p>
 
       <h3>Vagas abertas</h3>
-      <table>
-        <caption>Frentes de voluntariado disponíveis no semestre</caption>
-        <thead>
-          <tr>
-            <th scope="col">Frente</th>
-            <th scope="col">Dedicação</th>
-            <th scope="col">Perfil desejado</th>
-            <th scope="col">Modalidade</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Mentoria técnica</td>
-            <td>2 h/semana</td>
-            <td>Experiência em desenvolvimento ou dados</td>
-            <td>Presencial ou remoto</td>
-          </tr>
-          <tr>
-            <td>Apoio pedagógico em sala</td>
-            <td>4 h/semana</td>
-            <td>Licenciatura ou experiência com ensino</td>
-            <td>Presencial</td>
-          </tr>
-          <tr>
-            <td>Preparação para entrevistas</td>
-            <td>3 h/mês</td>
-            <td>Atuação em RH ou liderança de equipe</td>
-            <td>Remoto</td>
-          </tr>
-          <tr>
-            <td>Acolhimento infantil</td>
-            <td>3 h/semana</td>
-            <td>Experiência com crianças, sem exigência de formação</td>
-            <td>Presencial</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="tabela-rolagem" role="region" aria-label="Frentes de voluntariado disponíveis no semestre" tabindex="0">
+        <table>
+          <caption>Frentes de voluntariado disponíveis no semestre</caption>
+          <thead>
+            <tr>
+              <th scope="col">Frente</th>
+              <th scope="col">Dedicação</th>
+              <th scope="col">Perfil desejado</th>
+              <th scope="col">Modalidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mentoria técnica</td>
+              <td>2 h/semana</td>
+              <td>Experiência em desenvolvimento ou dados</td>
+              <td>Presencial ou remoto</td>
+            </tr>
+            <tr>
+              <td>Apoio pedagógico em sala</td>
+              <td>4 h/semana</td>
+              <td>Licenciatura ou experiência com ensino</td>
+              <td>Presencial</td>
+            </tr>
+            <tr>
+              <td>Preparação para entrevistas</td>
+              <td>3 h/mês</td>
+              <td>Atuação em RH ou liderança de equipe</td>
+              <td>Remoto</td>
+            </tr>
+            <tr>
+              <td>Acolhimento infantil</td>
+              <td>3 h/semana</td>
+              <td>Experiência com crianças, sem exigência de formação</td>
+              <td>Presencial</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h3>Como se tornar voluntário</h3>
       <ol>
@@ -246,7 +291,7 @@
     </section>
 
     <!-- BLOCO 6 - Dúvidas frequentes: pares pergunta/resposta em lista de definição -->
-    <section aria-labelledby="duvidas-frequentes">
+    <section class="area-principal" aria-labelledby="duvidas-frequentes">
       <h2 id="duvidas-frequentes">Dúvidas frequentes</h2>
 
       <dl>
@@ -265,7 +310,7 @@
     </section>
 
     <!-- BLOCO 7 - Conteúdo complementar: canal direto para quem ficou com dúvida -->
-    <aside aria-labelledby="apoie-projeto">
+    <aside class="area-lateral" aria-labelledby="apoie-projeto">
       <h2 id="apoie-projeto">Ainda em dúvida sobre como apoiar?</h2>
       <p>
         Fale com a coordenação de captação pelo e-mail
@@ -277,7 +322,7 @@
 
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer grade">
     <h2 class="visually-hidden">Informações institucionais</h2>
 
     <address>
@@ -292,11 +337,13 @@
         <li><a href="index.html">Início</a></li>
         <li><a href="projetos.html">Projetos sociais</a></li>
         <li><a href="cadastro.html">Seja apoiador</a></li>
+        <li><a href="componentes.html">Guia de componentes</a></li>
       </ul>
     </nav>
 
     <p><small>&copy; 2026 Instituto Ponte Digital. Organização da sociedade civil sem fins lucrativos.</small></p>
   </footer>
 
+  <script src="assets/js/menu.js"></script>
 </body>
 </html>
