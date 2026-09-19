@@ -1,24 +1,1054 @@
-/* Instituto Ponte Digital — estilos base
-   Etapa 1: apenas legibilidade e evidência da estrutura semântica.
-   O foco da avaliação é o HTML; o CSS aqui é intencionalmente enxuto. */
+/* ==========================================================================
+   Instituto Ponte Digital — folha de estilos
+   EP2 · Etapa 2 — Design System e grade responsiva de 12 colunas
+
+   Regra da arquitetura: nenhuma cor, tamanho de fonte ou espaçamento literal
+   fora do :root. Os componentes consomem apenas os tokens abaixo, então
+   ajustar a identidade visual significa editar um único bloco.
+   ========================================================================== */
+
+
+/* 1. Design System — tokens
+   -------------------------------------------------------------------------- */
 
 :root {
-  --azul: #1d4ed8;
-  --texto: #1e293b;
-  --suave: #64748b;
-  --borda: #e2e8f0;
-  --fundo: #ffffff;
+  /* Cores primárias — identidade (azul do logotipo) */
+  --cor-primaria:         #1d4ed8; /* links, navegação ativa — 6,7:1 sobre branco */
+  --cor-primaria-escura:  #1e3a8a; /* hover de links e anel de foco — 10,4:1 */
+  --cor-primaria-clara:   #dbeafe; /* fundos de destaque — texto sobre ele 12:1 */
+
+  /* Cores secundárias — ação de apoio (doar, voluntariar, enviar) */
+  --cor-secundaria:        #c2410c; /* botões de ação — texto branco 5,2:1 */
+  --cor-secundaria-escura: #9a3412; /* hover da ação — 7,3:1 */
+  --cor-secundaria-clara:  #ffedd5; /* fundo de chamadas de apoio */
+
+  /* Cores neutras */
+  --cor-texto:         #1e293b; /* corpo de texto — 14,6:1 */
+  --cor-texto-suave:   #475569; /* legendas e dicas — 7,6:1 */
+  --cor-texto-inverso: #ffffff; /* texto sobre fundos de cor */
+  --cor-borda-campo:   #64748b; /* contorno de campos — 4,8:1 (mínimo 3:1) */
+  --cor-borda:         #e2e8f0; /* divisórias decorativas */
+  --cor-fundo-suave:   #f1f5f9; /* blocos de apoio, grupos de opções */
+  --cor-fundo:         #ffffff;
+
+  /* Cores de feedback — estados de formulário */
+  --cor-sucesso: #15803d; /* 5,0:1 */
+  --cor-erro:    #b91c1c; /* 6,5:1 */
+  --cor-aviso:   #a16207; /* 4,9:1 */
+
+  /* Fundos claros e textos escuros de badges, alertas e toasts. Sobre fundo
+     claro, o verde e o âmbar base ficam abaixo de 4,5:1: daí as versões escuras. */
+  --cor-sucesso-clara:  #dcfce7;
+  --cor-sucesso-escura: #166534; /* 6,5:1 sobre a clara */
+  --cor-aviso-clara:    #fef3c7;
+  --cor-aviso-escura:   #854d0e; /* 6,2:1 sobre a clara */
+  --cor-erro-clara:     #fee2e2; /* erro sobre ela: 5,3:1 */
+  --cor-sobreposicao:   rgba(15, 23, 42, 0.55); /* fundo escurecido atrás do modal */
+
+  /* Alias semântico: o foco usa a primária escura */
+  --cor-foco: var(--cor-primaria-escura);
+
+  /* Tipografia — fontes do sistema: zero download, render imediato */
+  --fonte-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Escala modular 1,25 (terça maior) sobre 16px.
+     O menor degrau é travado em 14px como piso de legibilidade. */
+  --texto-sm:   0.875rem; /* 14px — legendas, dicas, rodapé */
+  --texto-base: 1rem;     /* 16px — corpo, rótulos, h4 */
+  --texto-lg:   1.25rem;  /* 20px — h3, texto de abertura */
+  --texto-xl:   1.563rem; /* 25px — h2 */
+  --texto-2xl:  1.953rem; /* 31px — h1 no celular */
+  --texto-3xl:  2.441rem; /* 39px — h1 no desktop */
+
+  --altura-linha-corpo:  1.6;
+  --altura-linha-titulo: 1.2;
+
+  --peso-regular: 400;
+  --peso-medio:   500;
+  --peso-semi:    600;
+  --peso-negrito: 700;
+
+  /* Espaçamento — grade de 8px; 4px só como meio passo interno */
+  --espaco-1: 0.25rem; /*  4px */
+  --espaco-2: 0.5rem;  /*  8px */
+  --espaco-3: 1rem;    /* 16px */
+  --espaco-4: 1.5rem;  /* 24px */
+  --espaco-5: 2rem;    /* 32px */
+  --espaco-6: 3rem;    /* 48px */
+  --espaco-7: 4rem;    /* 64px */
+
+  /* Forma e interação */
+  --raio-sm: 0.25rem;
+  --raio-md: 0.5rem;
+  --raio-lg: 0.75rem;
+  --borda-fina:      1px;
+  --borda-destaque:  4px;
+  --foco-largura:    3px;
+  --foco-afastamento: 2px;
+  --alvo-toque: 2.75rem;      /* 44px — área mínima de toque */
+  --tamanho-marcador: 1.25rem; /* 20px — checkbox e radio */
+  --alvo-compacto: 2rem;       /* 32px — acima do mínimo de 24px (WCAG 2.5.8) */
+
+  /* Ícones desenhados em CSS (hambúrguer e seta do submenu) */
+  --icone-largura:     1.25rem; /* 20px */
+  --icone-traco:       2px;
+  --icone-afastamento: 0.375rem; /* 6px entre as barras do hambúrguer */
+
+  /* Elevação, camadas e movimento */
+  --sombra-flutuante: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.12);
+  --camada-menu: 10;
+  --largura-submenu: 15rem;
+  --largura-toast:   24rem;
+  --largura-modal:   34rem;
+  --camada-toast:    20;
+  --raio-pilula:     999px;
+  --fonte-codigo: ui-monospace, "Cascadia Code", Consolas, monospace;
+  --duracao-rapida: 150ms; /* zeradas se o usuário pedir menos movimento */
+  --duracao-media:  250ms;
+
+  /* Estados interativos */
+  --sombra-botao:  0 0.25rem 0.75rem rgba(154, 52, 18, 0.25); /* laranja escuro a 25% */
+  --sombra-cartao: 0 0.5rem 1.25rem rgba(15, 23, 42, 0.10);
+  --pressao: 1px; /* quanto o botão afunda no clique */
+
+  /* Ícones de validação. SVG embutido não lê var(), por isso as cores de
+     erro (#b91c1c) e sucesso (#15803d) aparecem de novo aqui dentro. */
+  --icone-erro:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23b91c1c' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='8.5'/%3E%3Cpath d='M10 5.5v5.5M10 14.5v.01'/%3E%3C/svg%3E");
+  --icone-aviso:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23854d0e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 2.5l8.5 15h-17z'/%3E%3Cpath d='M10 8v4M10 14.8v.01'/%3E%3C/svg%3E");
+  --icone-info:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='8.5'/%3E%3Cpath d='M10 9v5M10 6v.01'/%3E%3C/svg%3E");
+  --icone-sucesso: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2315803d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 10.5l4 4 8-9'/%3E%3C/svg%3E");
+
+  /* Grade — 12 colunas; calha e margem crescem nos pontos de quebra */
+  --grade-colunas:  12;
+  --grade-calha:    var(--espaco-3); /* 16px entre colunas */
+  --grade-margem:   var(--espaco-3); /* 16px nas laterais */
+  --largura-maxima: 75rem;           /* 1200px */
+  --largura-leitura: 70ch;           /* linha confortável de leitura */
 }
+
+
+/* 2. Base
+   -------------------------------------------------------------------------- */
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: var(--texto);
-  background: var(--fundo);
-  line-height: 1.6;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  line-height: var(--altura-linha-corpo);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
 }
+
+h1, h2, h3, h4 {
+  line-height: var(--altura-linha-titulo);
+  margin: 0 0 var(--espaco-2);
+}
+
+/* h1 escala com a tela entre 31px e 39px; rem + vw mantém o zoom funcionando */
+h1 {
+  font-size: clamp(var(--texto-2xl), var(--texto-lg) + 2.5vw, var(--texto-3xl));
+  font-weight: var(--peso-negrito);
+  margin-bottom: var(--espaco-4);
+}
+
+h2 {
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-negrito);
+  margin-top: var(--espaco-5);
+}
+
+h3 {
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-semi);
+  margin-top: var(--espaco-4);
+}
+
+h4 {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  margin-top: var(--espaco-3);
+  color: var(--cor-texto-suave);
+}
+
+p, ul, ol, dl { margin: 0 0 var(--espaco-3); }
+
+/* Linha de leitura confortável, mesmo em telas largas */
+p, li, dd { max-width: var(--largura-leitura); }
+
+a { color: var(--cor-primaria); }
+a:hover { color: var(--cor-primaria-escura); }
+
+/* Imagens nunca ultrapassam o contêiner; height auto preserva a proporção.
+   Os atributos width/height no HTML reservam o espaço e evitam salto de layout. */
+img { max-width: 100%; height: auto; }
+
+/* Foco sempre visível na navegação por teclado, em qualquer elemento */
+:focus-visible {
+  outline: var(--foco-largura) solid var(--cor-foco);
+  outline-offset: var(--foco-afastamento);
+}
+
+
+/* 3. Layout — moldura da página e grade de 12 colunas
+   -------------------------------------------------------------------------- */
+
+/* Áreas macro: cabeçalho, conteúdo e rodapé. A linha do meio (1fr) absorve
+   a sobra, e o rodapé fica no fim da tela mesmo em página curta. */
+body {
+  display: grid;
+  grid-template-areas:
+    "cabecalho"
+    "conteudo"
+    "rodape";
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.site-header { grid-area: cabecalho; }
+main         { grid-area: conteudo; }
+.site-footer { grid-area: rodape; }
+
+/* Contêiner sem div extra: a margem lateral cresce até centralizar o
+   conteúdo na largura máxima, enquanto fundos e bordas vão de ponta a ponta */
+.site-header,
+main,
+.site-footer {
+  padding-inline: max(var(--grade-margem), (100% - var(--largura-maxima)) / 2);
+}
+
+/* Motor da grade: 12 colunas flexíveis. minmax(0, 1fr) impede que um
+   conteúdo largo estique a coluna. Mobile-first: todo filho ocupa as 12. */
+.grade {
+  display: grid;
+  grid-template-columns: repeat(var(--grade-colunas), minmax(0, 1fr));
+  column-gap: var(--grade-calha);
+}
+
+.grade > * { grid-column: 1 / -1; }
+
+/* Blocos do conteúdo: o espaço vertical vem do row-gap, não de margens */
+main {
+  row-gap: var(--espaco-6);
+  padding-block: var(--espaco-5);
+}
+
+main > * > :first-child { margin-top: 0; }
+
+/* Listas de cartões: cartões da mesma linha ficam com a mesma altura */
+.cartoes { row-gap: var(--grade-calha); }
+
+.site-footer {
+  padding-block: var(--espaco-5);
+  border-top: var(--borda-fina) solid var(--cor-borda);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+}
+
+.site-footer a { color: var(--cor-texto-suave); }
+
+
+/* 4. Componentes
+   -------------------------------------------------------------------------- */
+
+/* Cabeçalho: marca à esquerda, navegação à direita, na mesma linha.
+   position: relative ancora o painel do menu no celular; z-index põe
+   painel e submenu acima do conteúdo. */
+.site-header {
+  position: relative;
+  z-index: var(--camada-menu);
+  display: flex;
+  flex-wrap: wrap; /* sem JavaScript, o menu aberto desce para a linha de baixo */
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding-block: var(--espaco-3);
+  border-bottom: var(--borda-fina) solid var(--cor-borda);
+}
+
+.js .site-header { flex-wrap: nowrap; } /* menu recolhido: marca e botão sempre lado a lado */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand img { flex-shrink: 0; } /* o logotipo nunca encolhe */
+
+.brand-name { font-weight: var(--peso-negrito); }
+
+/* Lista de links: base comum do menu principal e do rodapé */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2) var(--espaco-4); /* 8px entre linhas, 24px entre links */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a { color: var(--cor-texto); text-decoration: none; }
+.menu a:hover { text-decoration: underline; }
+.menu a[aria-current="page"] { color: var(--cor-primaria); font-weight: var(--peso-semi); }
+
+
+/* Navegação principal — celular (base, abaixo de 768px)
+   Com JavaScript: o menu vira um painel recolhido atrás do botão hambúrguer.
+   Sem JavaScript: os botões somem e o menu fica aberto (nada se perde). */
+
+.menu-botao,
+.submenu-botao { display: none; }
+
+.js .menu-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: var(--alvo-toque);
+  padding: var(--espaco-2) var(--espaco-3);
+  border: var(--borda-fina) solid var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+  background: transparent;
+  color: var(--cor-texto);
+  font: inherit;
+  font-weight: var(--peso-semi);
+  cursor: pointer;
+}
+
+/* Ícone hambúrguer: uma barra + ::before e ::after; vira X quando aberto */
+.menu-icone,
+.menu-icone::before,
+.menu-icone::after {
+  display: block;
+  width: var(--icone-largura);
+  height: var(--icone-traco);
+  background: currentColor;
+  transition: transform var(--duracao-media) ease-out,
+              background-color var(--duracao-media) ease-out;
+}
+
+.menu-icone { position: relative; }
+
+.menu-icone::before,
+.menu-icone::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.menu-icone::before { transform: translateY(calc(-1 * var(--icone-afastamento))); }
+.menu-icone::after  { transform: translateY(var(--icone-afastamento)); }
+
+.menu-botao[aria-expanded="true"] .menu-icone { background-color: transparent; }
+.menu-botao[aria-expanded="true"] .menu-icone::before { transform: rotate(45deg); }
+.menu-botao[aria-expanded="true"] .menu-icone::after  { transform: rotate(-45deg); }
+
+/* Painel: fica sobre o conteúdo, logo abaixo do cabeçalho. visibility
+   hidden tira os links da ordem de tabulação e do leitor de tela. */
+.js .nav-principal .menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0;
+  padding: var(--espaco-2) var(--grade-margem) var(--espaco-4);
+  border-bottom: var(--borda-fina) solid var(--cor-borda);
+  background: var(--cor-fundo);
+  box-shadow: var(--sombra-flutuante);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(calc(-1 * var(--espaco-2)));
+  transition: opacity var(--duracao-media) ease-out,
+              transform var(--duracao-media) ease-out,
+              visibility 0s linear var(--duracao-media); /* some só depois do fade */
+}
+
+.js .menu-botao[aria-expanded="true"] + .menu {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.js .nav-principal .menu > li { border-bottom: var(--borda-fina) solid var(--cor-borda); }
+.js .nav-principal .menu > li:last-child { border-bottom: 0; }
+
+.nav-principal .menu a {
+  display: flex;
+  align-items: center;
+  min-height: var(--alvo-toque);
+}
+
+/* Item com submenu: link e seta na mesma linha, submenu embaixo (sanfona) */
+.tem-submenu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submenu {
+  flex-basis: 100%;
+  margin: 0;
+  padding: 0 0 var(--espaco-2) var(--espaco-4);
+  list-style: none;
+}
+
+.js .submenu { display: none; }
+.js .submenu-botao[aria-expanded="true"] + .submenu { display: block; }
+
+.js .submenu-botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--alvo-toque);
+  height: var(--alvo-toque);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+
+/* Seta desenhada com duas bordas; gira meia volta quando o submenu abre */
+.submenu-botao::before {
+  content: "";
+  width: var(--espaco-2);
+  height: var(--espaco-2);
+  border-right: var(--icone-traco) solid currentColor;
+  border-bottom: var(--icone-traco) solid currentColor;
+  transform: translateY(-25%) rotate(45deg);
+  transition: transform var(--duracao-rapida) ease-out;
+}
+
+.submenu-botao[aria-expanded="true"]::before { transform: translateY(25%) rotate(-135deg); }
+
+/* Abertura da página inicial */
+.hero p { font-size: var(--texto-lg); }
+
+.hero-img {
+  margin-top: var(--espaco-3);
+  border-radius: var(--raio-lg);
+}
+
+/* Botão de ação de apoio: link .btn e envio do formulário.
+   inline-flex centraliza o texto nos dois eixos, em qualquer largura. */
+.btn,
+button[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-2);
+  text-align: center;
+  min-height: var(--alvo-toque);
+  padding: var(--espaco-2) var(--espaco-4);
+  border: var(--borda-fina) solid transparent; /* visível no modo de alto contraste */
+  border-radius: var(--raio-md);
+  background: var(--cor-secundaria);
+  color: var(--cor-texto-inverso);
+  font: inherit;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--duracao-rapida) ease-out,
+              box-shadow var(--duracao-rapida) ease-out,
+              transform var(--duracao-rapida) ease-out;
+}
+
+/* hover: o fundo escurece e surge uma sombra — o botão "sobe" */
+.btn:hover,
+button[type="submit"]:not(:disabled):hover {
+  background: var(--cor-secundaria-escura);
+  color: var(--cor-texto-inverso);
+  box-shadow: var(--sombra-botao);
+}
+
+/* active: afunda 1px e perde a sombra — resposta física ao clique */
+.btn:active,
+button[type="submit"]:not(:disabled):active {
+  transform: translateY(var(--pressao));
+  box-shadow: none;
+}
+
+/* focus: o anel de 3px de :focus-visible (seção 2) vale para todos os botões */
+
+/* Variação azul para confirmações neutras (Entendi, Abrir). O laranja
+   continua reservado às ações de apoio. */
+.btn--primario { background: var(--cor-primaria); }
+
+.btn--primario:hover {
+  background: var(--cor-primaria-escura);
+  box-shadow: var(--sombra-cartao);
+}
+
+/* Ação secundária neutra */
+button[type="reset"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--alvo-toque);
+  padding: var(--espaco-2) var(--espaco-4);
+  border: var(--borda-fina) solid var(--cor-borda-campo);
+  border-radius: var(--raio-md);
+  background: transparent;
+  color: var(--cor-texto);
+  font: inherit;
+  font-weight: var(--peso-semi);
+  cursor: pointer;
+}
+
+/* Botões neutros (Limpar, Menu, seta do submenu): fundo suave no hover */
+button[type="reset"],
+.js .menu-botao,
+.js .submenu-botao {
+  transition: background-color var(--duracao-rapida) ease-out,
+              border-color var(--duracao-rapida) ease-out,
+              transform var(--duracao-rapida) ease-out;
+}
+
+button[type="reset"]:not(:disabled):hover,
+.js .menu-botao:hover,
+.js .submenu-botao:hover {
+  border-color: var(--cor-texto-suave);
+  background: var(--cor-fundo-suave);
+}
+
+button[type="reset"]:not(:disabled):active,
+.js .menu-botao:active { transform: translateY(var(--pressao)); }
+
+/* disabled: sai da paleta de ação — fundo neutro, texto suave, sem sombra
+   nem movimento. O cursor avisa que o clique não fará nada. */
+button:disabled {
+  border-color: var(--cor-borda);
+  background: var(--cor-fundo-suave);
+  color: var(--cor-texto-suave);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Cartões de impacto e de projetos: coluna flexível. A grade iguala a
+   altura dos cartões da mesma linha; o flex distribui o conteúdo dentro. */
+.card,
+.projeto {
+  display: flex;
+  flex-direction: column;
+  padding: var(--espaco-4);
+  border: var(--borda-fina) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+}
+
+/* Só o cartão de projeto reage, porque é o único com ação (o link Apoiar).
+   O de impacto é informativo e fica estático. :focus-within acende o
+   cartão quando o foco do teclado está no link dele. */
+.projeto {
+  transition: border-color var(--duracao-rapida) ease-out,
+              box-shadow var(--duracao-rapida) ease-out;
+}
+
+.projeto:hover,
+.projeto:focus-within {
+  border-color: var(--cor-primaria);
+  box-shadow: var(--sombra-cartao);
+}
+
+.projeto > :last-child a { font-weight: var(--peso-semi); }
+
+/* O padding do cartão já dá o respiro: zera a margem das pontas */
+.card > :first-child,
+.projeto > :first-child { margin-top: 0; }
+
+.card > :last-child,
+.projeto > :last-child { margin-bottom: 0; }
+
+/* Link "Apoiar" empurrado para a base: alinhado entre cartões vizinhos */
+.projeto > :last-child { margin-top: auto; }
+
+figure { margin: 0 0 var(--espaco-3); }
+figure img { border-radius: var(--raio-md); }
+
+figcaption {
+  margin-top: var(--espaco-1);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+}
+
+aside {
+  padding-left: var(--espaco-4);
+  border-left: var(--borda-destaque) solid var(--cor-primaria);
+}
+
+/* Índice interno da página de projetos */
+.indice {
+  padding: var(--espaco-3) var(--espaco-4);
+  border: var(--borda-fina) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-fundo-suave);
+}
+
+.indice h2 { margin-top: 0; font-size: var(--texto-lg); }
+.indice ol { margin: 0; padding-left: var(--espaco-4); }
+
+/* Tabelas de doação e voluntariado. No celular, a tabela larga rola dentro
+   do próprio bloco (focável por teclado) em vez de empurrar a página. */
+.tabela-rolagem {
+  overflow-x: auto;
+  margin-bottom: var(--espaco-4);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+caption {
+  caption-side: bottom;
+  padding-top: var(--espaco-2);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+  text-align: left;
+}
+
+th, td {
+  padding: var(--espaco-2) var(--espaco-3);
+  border: var(--borda-fina) solid var(--cor-borda);
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th { background: var(--cor-primaria-clara); }
+
+/* Lista de definição das dúvidas frequentes */
+dt { margin-top: var(--espaco-3); font-weight: var(--peso-semi); }
+dd { margin: var(--espaco-1) 0 0; color: var(--cor-texto-suave); }
+
+
+/* 5. Formulário de cadastro
+   -------------------------------------------------------------------------- */
+
+fieldset {
+  margin: 0 0 var(--espaco-4);
+  padding: var(--espaco-3) var(--espaco-4);
+  border: var(--borda-fina) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+}
+
+legend {
+  padding: 0 var(--espaco-2);
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-semi);
+}
+
+/* Rótulo a 4px do campo e 24px do campo anterior: a proximidade agrupa */
+.campo { margin-bottom: var(--espaco-4); }
+
+label {
+  display: inline-block;
+  margin-bottom: var(--espaco-1);
+}
+
+.campo label { font-weight: var(--peso-medio); }
+
+input, select, textarea {
+  display: block;
+  width: 100%;
+  min-height: var(--alvo-toque);
+  padding: var(--espaco-2) var(--espaco-3);
+  border: var(--borda-fina) solid var(--cor-borda-campo);
+  border-radius: var(--raio-sm);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font: inherit;
+  transition: border-color var(--duracao-rapida) ease-out,
+              box-shadow var(--duracao-rapida) ease-out;
+}
+
+textarea { resize: vertical; }
+
+/* Campos de texto reservam à direita o espaço do ícone de validação desde
+   o início, para o texto não pular quando o estado muda. Data, número e
+   select ficam de fora: o lado direito deles já tem controle nativo. */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  padding-right: calc(var(--espaco-3) * 2 + var(--icone-largura));
+  background-image: var(--icone-estado, none);
+  background-repeat: no-repeat;
+  background-position: right var(--espaco-3) center;
+  background-size: var(--icone-largura);
+}
+
+textarea { background-position: right var(--espaco-3) top var(--espaco-2); }
+
+/* Campos de marcar: tamanho próprio, rótulo à direita na mesma linha */
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline-block;
+  flex-shrink: 0;
+  width: var(--tamanho-marcador);
+  height: var(--tamanho-marcador);
+  min-height: 0;
+  margin: var(--espaco-1) 0 0; /* alinha o controle à primeira linha do rótulo */
+  padding: 0;
+  accent-color: var(--cor-primaria);
+}
+
+.campo-inline {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  margin-bottom: var(--espaco-2);
+}
+
+.campo-inline label { margin: 0; font-weight: var(--peso-regular); }
+
+/* Subgrupos de escolha (radio e checkbox) dentro de um fieldset maior */
+.grupo-opcoes {
+  margin-bottom: var(--espaco-4);
+  background: var(--cor-fundo-suave);
+}
+
+.grupo-opcoes legend { font-size: var(--texto-base); }
+
+/* Texto de apoio associado ao campo por aria-describedby */
+.hint {
+  display: block;
+  margin-top: var(--espaco-1);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+}
+
+/* Asterisco de obrigatoriedade: sem sublinhado pontilhado do padrão */
+abbr[title] { color: var(--cor-erro); text-decoration: none; cursor: help; }
+
+/* Estados dos campos, na ordem em que o usuário passa por eles.
+   hover e foco vêm antes da validação: um campo com erro continua
+   vermelho enquanto é corrigido, e o anel de foco mostra onde se está. */
+input:hover,
+select:hover,
+textarea:hover { border-color: var(--cor-texto-suave); }
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible { border-color: var(--cor-primaria); }
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: var(--cor-fundo-suave);
+  color: var(--cor-texto-suave);
+  cursor: not-allowed;
+}
+
+/* Erro: só depois da interação (:user-invalid), nunca em campo intocado.
+   Três sinais, para não depender só da cor: borda vermelha engrossada
+   pela sombra, ícone de exclamação e a dica do campo virando aviso. */
+input:user-invalid,
+select:user-invalid,
+textarea:user-invalid {
+  --icone-estado: var(--icone-erro);
+  border-color: var(--cor-erro);
+  box-shadow: 0 0 0 var(--borda-fina) var(--cor-erro);
+}
+
+input:user-invalid + .hint,
+select:user-invalid + .hint,
+textarea:user-invalid + .hint {
+  color: var(--cor-erro);
+  font-weight: var(--peso-semi);
+}
+
+input:user-invalid + .hint::before,
+select:user-invalid + .hint::before,
+textarea:user-invalid + .hint::before { content: "Atenção: "; }
+
+/* Sucesso: só em campo obrigatório preenchido corretamente. Campo
+   opcional vazio também é "válido", mas não merece um sinal de certo. */
+input:required:user-valid,
+select:required:user-valid,
+textarea:required:user-valid {
+  --icone-estado: var(--icone-sucesso);
+  border-color: var(--cor-sucesso);
+  box-shadow: 0 0 0 var(--borda-fina) var(--cor-sucesso);
+}
+
+/* Botões do formulário: empilhados e em largura total no celular
+   (alvo maior para o polegar), lado a lado a partir de 480px */
+.acoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+
+/* 6. Componentes de feedback — badges, alertas, toast e modal
+   Cada variação só troca variáveis locais (--badge-*, --alerta-*, --toast-*).
+   A estrutura é uma só; criar uma variação nova custa uma linha.
+   -------------------------------------------------------------------------- */
+
+/* Badges: etiqueta curta de categoria ou situação, sempre com texto */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  margin: 0 0 var(--espaco-3);
+  padding: 0;
+  list-style: none;
+}
+
+.badge {
+  --badge-texto: var(--cor-texto-suave);
+  --badge-fundo: var(--cor-fundo-suave);
+  display: inline-flex;
+  align-items: center;
+  padding: var(--espaco-1) var(--espaco-2);
+  border-radius: var(--raio-pilula);
+  background: var(--badge-fundo);
+  color: var(--badge-texto);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--altura-linha-titulo);
+}
+
+.badge--info     { --badge-texto: var(--cor-primaria-escura);   --badge-fundo: var(--cor-primaria-clara); }
+.badge--sucesso  { --badge-texto: var(--cor-sucesso-escura);    --badge-fundo: var(--cor-sucesso-clara); }
+.badge--aviso    { --badge-texto: var(--cor-aviso-escura);      --badge-fundo: var(--cor-aviso-clara); }
+.badge--erro     { --badge-texto: var(--cor-erro);              --badge-fundo: var(--cor-erro-clara); }
+.badge--destaque { --badge-texto: var(--cor-secundaria-escura); --badge-fundo: var(--cor-secundaria-clara); }
+
+/* Alertas: mensagem que fica na página. Borda lateral grossa, ícone e
+   título na cor da variação; o corpo do texto segue na cor padrão. */
+.alerta {
+  --alerta-borda:  var(--cor-primaria);
+  --alerta-titulo: var(--cor-primaria-escura);
+  --alerta-fundo:  var(--cor-primaria-clara);
+  --alerta-icone:  var(--icone-info);
+  position: relative;
+  margin-bottom: var(--espaco-4);
+  padding: var(--espaco-3) var(--espaco-4) var(--espaco-3)
+           calc(var(--espaco-4) + var(--icone-largura) + var(--espaco-3));
+  border: var(--borda-fina) solid var(--alerta-borda);
+  border-left-width: var(--borda-destaque);
+  border-radius: var(--raio-md);
+  background-color: var(--alerta-fundo);
+  background-image: var(--alerta-icone);
+  background-repeat: no-repeat;
+  background-position: left var(--espaco-4) top calc(var(--espaco-3) + var(--icone-traco));
+  background-size: var(--icone-largura);
+  color: var(--cor-texto);
+}
+
+.alerta p:last-of-type { margin-bottom: 0; }
+
+.alerta-titulo {
+  margin: 0 0 var(--espaco-1);
+  color: var(--alerta-titulo);
+  font-weight: var(--peso-semi);
+}
+
+.alerta--sucesso {
+  --alerta-borda:  var(--cor-sucesso);
+  --alerta-titulo: var(--cor-sucesso-escura);
+  --alerta-fundo:  var(--cor-sucesso-clara);
+  --alerta-icone:  var(--icone-sucesso);
+}
+
+.alerta--aviso {
+  --alerta-borda:  var(--cor-aviso);
+  --alerta-titulo: var(--cor-aviso-escura);
+  --alerta-fundo:  var(--cor-aviso-clara);
+  --alerta-icone:  var(--icone-aviso);
+}
+
+.alerta--erro {
+  --alerta-borda:  var(--cor-erro);
+  --alerta-titulo: var(--cor-erro);
+  --alerta-fundo:  var(--cor-erro-clara);
+  --alerta-icone:  var(--icone-erro);
+}
+
+.alerta--fechavel { padding-right: calc(var(--alvo-compacto) + var(--espaco-4)); }
+
+.alerta--fechavel .botao-fechar {
+  position: absolute;
+  top: var(--espaco-2);
+  right: var(--espaco-2);
+}
+
+/* Botão de fechar (×) comum a alerta, toast e modal */
+.botao-fechar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--alvo-compacto);
+  height: var(--alvo-compacto);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--cor-texto-suave);
+  font: inherit;
+  font-size: var(--texto-xl);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--duracao-rapida) ease-out;
+}
+
+.botao-fechar:hover { background: var(--cor-fundo-suave); color: var(--cor-texto); }
+
+/* Toast: notificação que não interrompe. A região fica fixa no canto e
+   não bloqueia cliques; cada toast entra deslizando de baixo. */
+.toasts {
+  position: fixed;
+  right: var(--grade-margem);
+  bottom: var(--grade-margem);
+  left: var(--grade-margem);
+  z-index: var(--camada-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--espaco-2);
+  pointer-events: none;
+}
+
+.toast {
+  --toast-cor:   var(--cor-primaria);
+  --toast-icone: var(--icone-info);
+  position: relative;
+  width: 100%;
+  max-width: var(--largura-toast);
+  padding: var(--espaco-3) calc(var(--alvo-compacto) + var(--espaco-3)) var(--espaco-3)
+           calc(var(--espaco-3) * 2 + var(--icone-largura));
+  border: var(--borda-fina) solid var(--cor-borda);
+  border-left: var(--borda-destaque) solid var(--toast-cor);
+  border-radius: var(--raio-md);
+  background-color: var(--cor-fundo);
+  background-image: var(--toast-icone);
+  background-repeat: no-repeat;
+  background-position: left var(--espaco-3) top calc(var(--espaco-3) + var(--icone-traco));
+  background-size: var(--icone-largura);
+  box-shadow: var(--sombra-flutuante);
+  pointer-events: auto;
+  animation: toast-entrada var(--duracao-media) ease-out;
+}
+
+.toast p { margin: 0; }
+.toast-titulo { font-weight: var(--peso-semi); }
+
+.toast .botao-fechar {
+  position: absolute;
+  top: var(--espaco-2);
+  right: var(--espaco-2);
+}
+
+.toast--sucesso { --toast-cor: var(--cor-sucesso); --toast-icone: var(--icone-sucesso); }
+.toast--aviso   { --toast-cor: var(--cor-aviso);   --toast-icone: var(--icone-aviso); }
+.toast--erro    { --toast-cor: var(--cor-erro);    --toast-icone: var(--icone-erro); }
+
+@keyframes toast-entrada {
+  from { opacity: 0; transform: translateY(var(--espaco-3)); }
+}
+
+/* Modal: dialog nativo com cabeçalho, corpo e rodapé */
+.modal {
+  width: min(var(--largura-modal), 100% - 2 * var(--grade-margem));
+  max-height: calc(100% - 2 * var(--grade-margem));
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-lg);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  box-shadow: var(--sombra-flutuante);
+}
+
+.modal[open] { animation: modal-entrada var(--duracao-media) ease-out; }
+
+/* ::backdrop não herdava variáveis em navegadores anteriores a 2024:
+   o valor depois da vírgula garante o fundo escurecido nesses casos */
+.modal::backdrop { background: var(--cor-sobreposicao, rgba(15, 23, 42, 0.55)); }
+
+@keyframes modal-entrada {
+  from { opacity: 0; transform: translateY(var(--espaco-3)) scale(0.98); }
+}
+
+.modal-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4) var(--espaco-4) var(--espaco-3);
+  border-bottom: var(--borda-fina) solid var(--cor-borda);
+}
+
+.modal-cabecalho h2 { margin: 0; font-size: var(--texto-lg); }
+
+.modal-corpo { padding: var(--espaco-4); }
+.modal-corpo > :last-child { margin-bottom: 0; }
+
+.modal-rodape {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-top: var(--borda-fina) solid var(--cor-borda);
+  background: var(--cor-fundo-suave);
+}
+
+/* Botão com aparência de link, para abrir o modal no meio do texto */
+.botao-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cor-primaria);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.botao-link:hover { color: var(--cor-primaria-escura); }
+
+.acao-modal { margin: var(--espaco-2) 0 0; }
+
+/* Sem JavaScript, gatilhos de modal e toast não fariam nada: somem */
+html:not(.js) [data-abre-modal],
+html:not(.js) [data-toast] { display: none; }
+
+/* Guia de componentes */
+.guia-exemplos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+}
+
+.codigo {
+  margin: 0 0 var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-radius: var(--raio-md);
+  background: var(--cor-texto);
+  color: var(--cor-fundo);
+  font-family: var(--fonte-codigo);
+  font-size: var(--texto-sm);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+code { font-family: var(--fonte-codigo); }
+
+
+/* 7. Utilitários
+   -------------------------------------------------------------------------- */
 
 /* Conteúdo visível apenas para leitores de tela */
 .visually-hidden {
@@ -28,231 +1058,154 @@ body {
   margin: -1px;
   padding: 0;
   overflow: hidden;
-  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
 
-.site-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--borda);
+
+/* 8. Responsivo — cinco pontos de quebra, mobile-first
+   Medidas em em (1em = 16px) para acompanhar a fonte escolhida pelo usuário.
+   Cada faixa só redefine tokens da grade ou quantas colunas um bloco ocupa.
+   -------------------------------------------------------------------------- */
+
+/* 1 · a partir de 480px — celular grande ou deitado */
+@media (min-width: 30em) {
+  .acoes { flex-direction: row; flex-wrap: wrap; }
+
+  .campo-metade,
+  .campo-terco,
+  .campo-dois-tercos { grid-column: span 6; }
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  color: inherit;
+/* 2 · a partir de 768px — tablet em pé */
+@media (min-width: 48em) {
+  :root {
+    --grade-calha:  var(--espaco-4);
+    --grade-margem: var(--espaco-5);
+  }
+
+  .cartoes > article { grid-column: span 4; }
+  .cartoes-grandes > article { grid-column: 1 / -1; }
+
+  .campo-terco       { grid-column: span 4; }
+  .campo-dois-tercos { grid-column: span 8; }
+
+  .site-footer address { grid-column: 1 / span 7; }
+  .site-footer nav     { grid-column: 8 / -1; }
+  .site-footer .menu   { justify-content: flex-end; }
+
+  /* Navegação: o hambúrguer sai e o menu volta a ser horizontal */
+  .js .menu-botao { display: none; }
+
+  .js .nav-principal .menu {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--espaco-4);
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .js .nav-principal .menu > li { border-bottom: 0; }
+  .nav-principal .menu a { min-height: 0; }
+
+  .tem-submenu {
+    position: relative; /* referência do submenu suspenso */
+    flex-wrap: nowrap;
+    gap: var(--espaco-1);
+  }
+
+  .js .submenu-botao {
+    width: var(--alvo-compacto);
+    height: var(--alvo-compacto);
+  }
+
+  /* Dropdown: oculto por padrão (visibility + opacity); aparece com
+     :hover, com a seta aberta ou, sem JavaScript, com :focus-within */
+  .submenu,
+  .js .submenu {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: var(--largura-submenu);
+    padding: var(--espaco-2) 0;
+    border: var(--borda-fina) solid var(--cor-borda);
+    border-radius: var(--raio-md);
+    background: var(--cor-fundo);
+    box-shadow: var(--sombra-flutuante);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--espaco-1)));
+    transition: opacity var(--duracao-rapida) ease-out,
+                transform var(--duracao-rapida) ease-out,
+                visibility 0s linear var(--duracao-rapida);
+  }
+
+  .tem-submenu:hover > .submenu,
+  html:not(.js) .tem-submenu:focus-within > .submenu,
+  .submenu-botao[aria-expanded="true"] + .submenu {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .nav-principal .submenu a {
+    display: block;
+    padding: var(--espaco-2) var(--espaco-3);
+  }
+
+  .nav-principal .submenu a:hover {
+    background: var(--cor-fundo-suave);
+    text-decoration: none;
+  }
 }
 
-.brand-name { font-weight: 700; }
+/* 3 · a partir de 1024px — tablet deitado e notebook */
+@media (min-width: 64em) {
+  .area-principal { grid-column: 1 / span 8; }
+  .area-lateral   { grid-column: 9 / -1; align-self: start; }
+  .lateral-fixa   { position: sticky; top: var(--espaco-4); }
 
-.menu {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  .cartoes-grandes > article { grid-column: span 4; }
+
+  .hero > *     { grid-column: 1 / span 7; }
+  .hero picture { grid-column: 8 / -1; grid-row: 1 / span 3; align-self: center; }
+  .hero-img     { margin-top: 0; }
 }
 
-.menu a { color: var(--texto); text-decoration: none; }
-.menu a:hover,
-.menu a:focus { text-decoration: underline; }
-.menu a[aria-current="page"] { color: var(--azul); font-weight: 600; }
+/* 4 · a partir de 1280px — desktop */
+@media (min-width: 80em) {
+  :root { --grade-calha: var(--espaco-5); }
 
-main {
-  max-width: 56rem;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
+  .bloco-par { grid-column: span 6; }
 }
 
-main > section,
-main > aside { margin-bottom: 3rem; }
+/* 5 · a partir de 1536px — desktop panorâmico */
+@media (min-width: 96em) {
+  :root {
+    --largura-maxima: 90rem;
+    --grade-margem:   var(--espaco-7);
+  }
 
-h1 { font-size: 2rem; line-height: 1.25; }
-h2 { font-size: 1.4rem; margin-top: 2rem; }
-h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
-h4 { font-size: 1rem; margin-bottom: 0.25rem; color: var(--suave); }
-
-.hero p { font-size: 1.05rem; }
-
-.btn {
-  display: inline-block;
-  padding: 0.7rem 1.25rem;
-  background: var(--azul);
-  color: #fff;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
+  .hero > *     { grid-column: 1 / span 6; }
+  .hero picture { grid-column: 7 / -1; }
 }
 
-.card,
-.projeto {
-  border: 1px solid var(--borda);
-  border-radius: 8px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
+
+/* Preferência do sistema: menos movimento. Zerar as durações desliga
+   todas as transições de uma vez, porque todas leem esses tokens. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duracao-rapida: 0ms;
+    --duracao-media:  0ms;
+  }
 }
-
-/* Imagens nunca ultrapassam o contêiner; height auto preserva a proporção.
-   Os atributos width/height no HTML reservam o espaço e evitam salto de layout. */
-img { max-width: 100%; height: auto; }
-
-.hero-img { border-radius: 10px; margin-top: 1rem; }
-
-figure { margin: 0 0 1rem; }
-figure img { border-radius: 6px; }
-figcaption { font-size: 0.875rem; color: var(--suave); }
-
-aside {
-  border-left: 4px solid var(--azul);
-  padding-left: 1.25rem;
-}
-
-fieldset {
-  border: 1px solid var(--borda);
-  border-radius: 8px;
-  margin: 0 0 1.5rem;
-  padding: 1rem 1.25rem;
-}
-
-legend { font-weight: 600; padding: 0 0.35rem; }
-
-label { display: inline-block; margin-bottom: 0.25rem; font-size: 0.95rem; }
-
-input, select, textarea {
-  display: block;
-  width: 100%;
-  padding: 0.55rem 0.7rem;
-  border: 1px solid var(--borda);
-  border-radius: 6px;
-  font: inherit;
-}
-
-input[type="checkbox"] { display: inline-block; width: auto; }
-
-button {
-  padding: 0.7rem 1.25rem;
-  border: 1px solid var(--azul);
-  border-radius: 8px;
-  background: var(--azul);
-  color: #fff;
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-button[type="reset"] { background: transparent; color: var(--azul); }
-
-.site-footer {
-  border-top: 1px solid var(--borda);
-  padding: 2rem 1.5rem;
-  color: var(--suave);
-  font-size: 0.9rem;
-}
-
-.site-footer a { color: var(--suave); }
-
-@media (max-width: 480px) {
-  .site-header { flex-direction: column; align-items: flex-start; }
-}
-
-/* Índice interno da página de projetos */
-.indice {
-  border: 1px solid var(--borda);
-  border-radius: 8px;
-  padding: 1rem 1.25rem 1rem 2.5rem;
-  margin-bottom: 3rem;
-}
-
-.indice h2 { margin-top: 0; font-size: 1.1rem; }
-.indice ol { margin: 0; }
-
-/* Tabelas de doação e voluntariado */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-}
-
-caption {
-  caption-side: bottom;
-  padding-top: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--suave);
-  text-align: left;
-}
-
-th, td {
-  border: 1px solid var(--borda);
-  padding: 0.6rem 0.75rem;
-  text-align: left;
-  vertical-align: top;
-}
-
-thead th { background: #f1f5f9; }
-
-/* Lista de definição das dúvidas frequentes */
-dt { font-weight: 600; margin-top: 1rem; }
-dd { margin: 0.25rem 0 0; color: var(--suave); }
-
-/* ---------- Formulário de cadastro ---------- */
-
-.campo { margin-bottom: 1.1rem; }
-
-.campo label { font-weight: 500; }
-
-/* Campos de marcar: rótulo à direita do controle, na mesma linha */
-.campo-inline {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
-}
-
-.campo-inline label { margin: 0; font-weight: 400; }
-
-/* Texto de apoio associado ao campo por aria-describedby */
-.hint {
-  display: block;
-  margin-top: 0.3rem;
-  font-size: 0.82rem;
-  color: var(--suave);
-}
-
-/* Asterisco de obrigatoriedade: sem sublinhado pontilhado do padrão */
-abbr[title] { text-decoration: none; color: #b91c1c; cursor: help; }
-
-/* Subgrupos de escolha (radio e checkbox) dentro de um fieldset maior */
-.grupo-opcoes {
-  background: #f8fafc;
-  margin-bottom: 1.25rem;
-}
-
-.grupo-opcoes legend { font-weight: 500; font-size: 0.95rem; }
-
-/* Foco sempre visível: navegação por teclado */
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-button:focus-visible {
-  outline: 3px solid #93c5fd;
-  outline-offset: 1px;
-}
-
-/* Erro só aparece depois da interação, não em campo ainda intocado */
-input:user-invalid,
-select:user-invalid,
-textarea:user-invalid { border-color: #b91c1c; }
-
-.acoes { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-
-textarea { resize: vertical; }
