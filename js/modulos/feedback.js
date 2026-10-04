@@ -2,72 +2,69 @@
   Instituto Ponte Digital - componentes de feedback
   -------------------------------------------------
   Responsabilidade deste arquivo: criar, mostrar e remover toasts, abrir
-  modais e montar o resumo de erros do cadastro. A aparência é toda do CSS.
+  modais e montar o resumo de erros do cadastro. Só interface: nada de
+  rede nem de armazenamento. A aparência é toda do CSS.
 
   API para o back-end (também disponível pelos atributos data-*):
     PonteFeedback.toast(tipo, titulo, texto)   tipo: sucesso | erro | aviso | info
     PonteFeedback.abrirModal(id)
+
+  Na SPA, a região de toasts fica fixa em index.html: iniciarFeedback() roda
+  uma vez. Modais e formulário vêm com a tela: prepararTela() roda a cada troca.
 */
 
-(function () {
-  'use strict';
+var DURACAO_TOAST = 8000;
 
-  var DURACAO_TOAST = 8000;
+/* ---------- Toast ---------- */
+
+export function toast(tipo, titulo, texto) {
   var regiao = document.querySelector('.toasts');
+  if (!regiao) return;
 
-  /* ---------- Toast ---------- */
+  var item = document.createElement('div');
+  item.className = 'toast toast--' + tipo;
 
-  function toast(tipo, titulo, texto) {
-    if (!regiao) return;
+  var elTitulo = document.createElement('p');
+  elTitulo.className = 'toast-titulo';
+  elTitulo.textContent = titulo;
 
-    var item = document.createElement('div');
-    item.className = 'toast toast--' + tipo;
+  var elTexto = document.createElement('p');
+  elTexto.textContent = texto;
 
-    var elTitulo = document.createElement('p');
-    elTitulo.className = 'toast-titulo';
-    elTitulo.textContent = titulo;
+  var fechar = document.createElement('button');
+  fechar.type = 'button';
+  fechar.className = 'botao-fechar';
+  fechar.innerHTML = '<span aria-hidden="true">&times;</span>' +
+                     '<span class="visually-hidden">Fechar notificação</span>';
 
-    var elTexto = document.createElement('p');
-    elTexto.textContent = texto;
+  item.append(elTitulo, elTexto, fechar);
+  regiao.appendChild(item);
 
-    var fechar = document.createElement('button');
-    fechar.type = 'button';
-    fechar.className = 'botao-fechar';
-    fechar.innerHTML = '<span aria-hidden="true">&times;</span>' +
-                       '<span class="visually-hidden">Fechar notificação</span>';
+  /* Some sozinho, mas a contagem pausa enquanto o mouse ou o foco
+     estão sobre ele: ninguém perde a mensagem no meio da leitura. */
+  var timer;
+  function remover() { clearTimeout(timer); item.remove(); }
+  function agendar() { clearTimeout(timer); timer = setTimeout(remover, DURACAO_TOAST); }
 
-    item.append(elTitulo, elTexto, fechar);
-    regiao.appendChild(item);
+  item.addEventListener('mouseenter', function () { clearTimeout(timer); });
+  item.addEventListener('focusin', function () { clearTimeout(timer); });
+  item.addEventListener('mouseleave', agendar);
+  item.addEventListener('focusout', agendar);
+  agendar();
+}
 
-    /* Some sozinho, mas a contagem pausa enquanto o mouse ou o foco
-       estão sobre ele: ninguém perde a mensagem no meio da leitura. */
-    var timer;
-    function remover() { clearTimeout(timer); item.remove(); }
-    function agendar() { clearTimeout(timer); timer = setTimeout(remover, DURACAO_TOAST); }
+/* ---------- Modal ---------- */
 
-    item.addEventListener('mouseenter', function () { clearTimeout(timer); });
-    item.addEventListener('focusin', function () { clearTimeout(timer); });
-    item.addEventListener('mouseleave', agendar);
-    item.addEventListener('focusout', agendar);
-    agendar();
-  }
+export function abrirModal(id) {
+  var dialogo = document.getElementById(id);
+  if (dialogo && typeof dialogo.showModal === 'function') dialogo.showModal();
+}
 
-  /* ---------- Modal ---------- */
+/* ---------- Gatilhos declarativos (site inteiro, uma vez) ---------- */
 
-  function abrirModal(id) {
-    var dialogo = document.getElementById(id);
-    if (dialogo && typeof dialogo.showModal === 'function') dialogo.showModal();
-  }
-
-  /* Clique no fundo escuro fecha: o alvo é o próprio dialog, não a caixa */
-  document.querySelectorAll('dialog.modal').forEach(function (dialogo) {
-    dialogo.addEventListener('click', function (evento) {
-      if (evento.target === dialogo) dialogo.close();
-    });
-  });
-
-  /* ---------- Gatilhos declarativos ---------- */
-
+export function iniciarFeedback() {
+  /* Um ouvinte só no document atende também os botões das telas que o
+     roteador ainda vai carregar: o clique sobe até ele (delegação). */
   document.addEventListener('click', function (evento) {
     var alvo = evento.target;
 
@@ -90,17 +87,29 @@
     }
   });
 
-  /* ---------- Formulário de cadastro ---------- */
+  window.PonteFeedback = { toast: toast, abrirModal: abrirModal };
+}
 
-  var form = document.getElementById('form-apoio');
-  var resumo = document.getElementById('resumo-erros');
+/* ---------- Itens da tela atual (a cada troca de tela) ---------- */
+
+export function prepararTela(raiz) {
+  /* Clique no fundo escuro fecha: o alvo é o próprio dialog, não a caixa */
+  raiz.querySelectorAll('dialog.modal').forEach(function (dialogo) {
+    dialogo.addEventListener('click', function (evento) {
+      if (evento.target === dialogo) dialogo.close();
+    });
+  });
+
+  /* Formulário de cadastro */
+  var form = raiz.querySelector('#form-apoio');
+  var resumo = raiz.querySelector('#resumo-erros');
 
   if (form && resumo) {
     var textoResumo = resumo.querySelector('.alerta-texto');
     var montando = false;
 
-    /* O navegador dispara "invalid" em cada campo com problema quando alguém
-       tenta enviar. Juntamos todos numa única mensagem no topo do formulário. */
+    /* checkValidity() (em validacao.js) dispara "invalid" em cada campo com
+       problema. Juntamos todos numa única mensagem no topo do formulário. */
     form.addEventListener('invalid', function () {
       if (montando) return;
       montando = true;
@@ -118,26 +127,11 @@
       }, 0);
     }, true);
 
-    /* "submit" só dispara com o formulário válido. Sem back-end, o envio é
-       simulado; na integração, troque o setTimeout por um fetch ao servidor. */
-    form.addEventListener('submit', function (evento) {
-      evento.preventDefault();
+    /* Este submit só chega aqui com o formulário válido (validacao.js barra
+       antes o envio com erro): o resumo da tentativa anterior sai de cena.
+       O envio em si é de cadastro.js. */
+    form.addEventListener('submit', function () {
       resumo.hidden = true;
-
-      var botao = form.querySelector('button[type="submit"]');
-      var rotulo = botao.textContent;
-      botao.disabled = true;
-      botao.textContent = 'Enviando…';
-
-      setTimeout(function () {
-        botao.disabled = false;
-        botao.textContent = rotulo;
-        form.reset();
-        toast('sucesso', 'Cadastro enviado',
-              'Obrigado! Em até 2 dias úteis a coordenação entra em contato pelo e-mail informado.');
-      }, 1200);
     });
   }
-
-  window.PonteFeedback = { toast: toast, abrirModal: abrirModal };
-})();
+}
