@@ -4,13 +4,15 @@
         O Chart.js continua vindo do CDN por import() dinâmico, fora do pacote.
   - CSS: style.css minificado (esbuild).
   - HTML: casca e fragmentos sem comentários e espaços redundantes (html-minifier-terser).
-  - Imagens: copiadas para dist/imagens.
+  - Imagens: fotos já otimizadas por scripts/imagens.mjs são copiadas (os originais
+    ficam de fora); SVGs passam pelo svgo.
   Ao final, imprime o tamanho de cada grupo antes e depois.
 */
 import { build } from 'esbuild';
 import { minify } from 'html-minifier-terser';
+import { optimize } from 'svgo';
 import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 
 const SAIDA = 'dist';
 
@@ -64,19 +66,27 @@ for (const arquivo of ['index.html', ...fragmentos]) {
   await writeFile(join(SAIDA, arquivo), await minify(original, OPCOES_HTML));
 }
 
-// Imagens
-await cp('imagens', join(SAIDA, 'imagens'), { recursive: true });
+// Imagens: tudo menos imagens/originais/; SVGs otimizados (metadados e casas decimais)
+await cp('imagens', join(SAIDA, 'imagens'), {
+  recursive: true,
+  filter: (origem) => !relative('imagens', origem).startsWith('originais')
+});
+for (const arquivo of (await readdir(join(SAIDA, 'imagens'))).filter((f) => f.endsWith('.svg'))) {
+  const caminho = join(SAIDA, 'imagens', arquivo);
+  await writeFile(caminho, optimize(await readFile(caminho, 'utf8'), { multipass: true }).data);
+}
 
 // Relatório
 const arquivosJs = [];
 for (const pasta of ['js', 'js/dados', 'js/modulos', 'js/servicos', 'js/templates']) {
   for (const f of await readdir(pasta)) if (f.endsWith('.js')) arquivosJs.push(join(pasta, f));
 }
+const svgs = (await readdir('imagens')).filter((f) => f.endsWith('.svg')).map((f) => join('imagens', f));
 const grupos = [
   ['JavaScript', arquivosJs, [join(SAIDA, 'js/app.js')]],
   ['CSS', ['css/style.css'], [join(SAIDA, 'css/style.css')]],
   ['HTML', ['index.html', ...fragmentos], ['index.html', ...fragmentos].map((f) => join(SAIDA, f))],
-  ['Imagens', ['imagens'], [join(SAIDA, 'imagens')]]
+  ['SVG', svgs, svgs.map((f) => join(SAIDA, f))]
 ];
 
 const kb = (n) => (n / 1024).toFixed(1).padStart(7) + ' KB';
