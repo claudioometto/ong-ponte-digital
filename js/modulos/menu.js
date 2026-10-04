@@ -43,13 +43,10 @@ export function iniciarMenu() {
       definir(botao, !estaAberto(botao));
     });
 
-    /* No desktop, o submenu acompanha o foco do teclado: abre quando o foco
-       entra no item e fecha quando sai. O próprio botão fica de fora, senão
-       o foco do clique abriria e o clique fecharia logo em seguida. */
-    item.addEventListener('focusin', function (evento) {
-      if (desktop.matches && evento.target !== botao) definir(botao, true);
-    });
-
+    /* Pelo teclado, o submenu abre só pela seta (Enter ou Espaço), como no
+       padrão "disclosure" da WAI. Antes ele abria quando o foco chegava ao
+       link, e o Tab passava por cinco links extras em toda tela. Fecha
+       quando o foco sai do item. */
     item.addEventListener('focusout', function (evento) {
       if (!item.contains(evento.relatedTarget)) definir(botao, false);
     });

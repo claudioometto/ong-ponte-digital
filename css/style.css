@@ -496,7 +496,7 @@ button[type="submit"] {
 
 /* hover: o fundo escurece e surge uma sombra — o botão "sobe" */
 .btn:hover,
-button[type="submit"]:not(:disabled):hover {
+button[type="submit"]:not(:disabled, [aria-disabled="true"]):hover {
   background: var(--cor-secundaria-escura);
   color: var(--cor-texto-inverso);
   box-shadow: var(--sombra-botao);
@@ -504,7 +504,7 @@ button[type="submit"]:not(:disabled):hover {
 
 /* active: afunda 1px e perde a sombra — resposta física ao clique */
 .btn:active,
-button[type="submit"]:not(:disabled):active {
+button[type="submit"]:not(:disabled, [aria-disabled="true"]):active {
   transform: translateY(var(--pressao));
   box-shadow: none;
 }
@@ -556,8 +556,11 @@ button[type="reset"]:not(:disabled):active,
 .js .menu-botao:active { transform: translateY(var(--pressao)); }
 
 /* disabled: sai da paleta de ação — fundo neutro, texto suave, sem sombra
-   nem movimento. O cursor avisa que o clique não fará nada. */
-button:disabled {
+   nem movimento. O cursor avisa que o clique não fará nada.
+   aria-disabled: mesmo visual, mas o botão continua focável. É o estado do
+   envio em andamento: com disabled, o foco do teclado caía no body. */
+button:disabled,
+button[aria-disabled="true"] {
   border-color: var(--cor-borda);
   background: var(--cor-fundo-suave);
   color: var(--cor-texto-suave);

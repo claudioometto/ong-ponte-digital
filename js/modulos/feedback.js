@@ -47,7 +47,11 @@ export function toast(tipo, titulo, texto) {
   function agendar() { clearTimeout(timer); timer = setTimeout(remover, DURACAO_TOAST); }
 
   item.addEventListener('mouseenter', function () { clearTimeout(timer); });
-  item.addEventListener('focusin', function () { clearTimeout(timer); });
+  item.addEventListener('focusin', function (evento) {
+    clearTimeout(timer);
+    /* Guarda de onde o foco veio, para devolvê-lo quando o toast fechar */
+    if (!item.contains(evento.relatedTarget)) item.origemFoco = evento.relatedTarget;
+  });
   item.addEventListener('mouseleave', agendar);
   item.addEventListener('focusout', agendar);
   agendar();
@@ -58,6 +62,27 @@ export function toast(tipo, titulo, texto) {
 export function abrirModal(id) {
   var dialogo = document.getElementById(id);
   if (dialogo && typeof dialogo.showModal === 'function') dialogo.showModal();
+}
+
+/* ---------- Foco ao fechar ---------- */
+
+/* Move o foco por script. Título ou contêiner ganha tabindex="-1": recebe o
+   foco sem entrar na ordem do Tab. */
+export function moverFoco(elemento) {
+  if (!elemento.matches('a[href], button, input, select, textarea, [tabindex]')) {
+    elemento.setAttribute('tabindex', '-1');
+  }
+  elemento.focus();
+}
+
+/* Para onde o foco vai quando um toast ou alerta fecha: de onde a pessoa
+   veio (toast), o título da seção do alerta, ou o conteúdo principal. */
+function destinoDoFoco(caixa) {
+  if (!caixa.contains(document.activeElement)) return null; // fechou com o mouse
+  if (caixa.origemFoco && caixa.origemFoco.isConnected) return caixa.origemFoco;
+  var secao = caixa.closest('section');
+  var titulo = secao && secao.querySelector('h1, h2, h3');
+  return titulo || document.getElementById('app');
 }
 
 /* ---------- Gatilhos declarativos (site inteiro, uma vez) ---------- */
@@ -82,8 +107,11 @@ export function iniciarFeedback() {
     var fechar = alvo.closest('.toast .botao-fechar, .alerta .botao-fechar');
     if (fechar) {
       var caixa = fechar.closest('.toast, .alerta');
+      var destino = destinoDoFoco(caixa);
       if (caixa.classList.contains('toast')) caixa.remove();
       else caixa.hidden = true;
+      /* O botão sumiu junto com a caixa: sem isto, o foco caía no body */
+      if (destino) moverFoco(destino);
     }
   });
 
