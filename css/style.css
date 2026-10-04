@@ -191,9 +191,36 @@ img { max-width: 100%; height: auto; }
   outline-offset: var(--foco-afastamento);
 }
 
+/* Campo de data: quando o Tab chega ao ícone do calendário, o navegador tira o
+   :focus-visible e o :focus do input (o foco fica no ícone, dentro do campo) e o
+   anel sumia (issue #13). :focus-within cobre esse trecho. No clique, campos
+   de texto já mostram o anel, então nada muda para quem usa mouse. */
+input[type="date"]:focus-within {
+  outline: var(--foco-largura) solid var(--cor-foco);
+  outline-offset: var(--foco-afastamento);
+}
+
 /* Título e seção recebem foco do roteador (tabindex="-1") só para o leitor de
    tela anunciar a troca de tela. Não são clicáveis: o anel confundiria. */
 [tabindex="-1"]:focus { outline: none; }
+
+/* Link "Pular para o conteúdo": fora da tela até receber foco pelo Tab;
+   então aparece no topo, sobre o cabeçalho (WCAG 2.4.1). */
+.pular-conteudo {
+  position: absolute;
+  top: var(--espaco-2);
+  left: var(--espaco-2);
+  z-index: 100;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-primaria-escura);
+  color: var(--cor-fundo);
+  font-weight: 700;
+  transform: translateY(-200%);
+}
+
+.pular-conteudo:focus { transform: none; }
+.pular-conteudo:hover { color: var(--cor-fundo); }
 
 
 /* 3. Layout — moldura da página e grade de 12 colunas
@@ -744,6 +771,7 @@ select:hover,
 textarea:hover { border-color: var(--cor-texto-suave); }
 
 input:focus-visible,
+input[type="date"]:focus-within,
 select:focus-visible,
 textarea:focus-visible { border-color: var(--cor-primaria); }
 

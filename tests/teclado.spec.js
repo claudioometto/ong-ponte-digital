@@ -1,5 +1,27 @@
-// Navegação por teclado no menu e foco visível (WCAG 2.1.1 e 2.4.7).
+// Navegação por teclado no menu e foco visível (WCAG 2.1.1, 2.4.1 e 2.4.7).
 import { test, expect } from '@playwright/test';
+
+test('o primeiro Tab mostra "Pular para o conteúdo" e o Enter leva o foco ao main', async ({ page }) => {
+  await page.goto('/#/projetos');
+  await expect(page.locator('#app h1')).toHaveText('Projetos sociais');
+  await page.locator('body').focus();
+  await page.keyboard.press('Tab');
+  const pular = page.locator('.pular-conteudo');
+  await expect(pular).toBeFocused();
+  await expect(pular).toBeInViewport();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#app')).toBeFocused();
+  // Âncora comum não é rota: a tela continua a mesma
+  await expect(page.locator('#app h1')).toHaveText('Projetos sociais');
+  // O próximo Tab segue dentro do conteúdo, não volta ao menu
+  await page.keyboard.press('Tab');
+  expect(await page.evaluate(() => document.getElementById('app').contains(document.activeElement))).toBe(true);
+});
+
+test('endereço aberto já com #app carrega a tela inicial, não a página de erro', async ({ page }) => {
+  await page.goto('/#app');
+  await expect(page.locator('#app h1')).toHaveText(/primeiro emprego/);
+});
 
 test('menu do celular abre com Enter e fecha com Esc, devolvendo o foco', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'O botão Menu só existe abaixo de 768px');
@@ -25,9 +47,7 @@ test('no desktop, o submenu abre quando o foco do Tab entra nele', async ({ page
 });
 
 test('todo elemento que recebe foco pelo Tab no cadastro mostra o contorno de foco', async ({ page }) => {
-  // Falha conhecida: ícone do calendário dos campos date (issue #13).
-  // Quando for corrigida, o Playwright acusa "passou inesperadamente" e esta linha sai.
-  test.fail(true, 'Issue #13: campo de data perde o anel de foco no ícone do calendário');
+  // Inclui o ícone do calendário dos campos date (falha da issue #13, corrigida)
   await page.goto('/#/cadastro');
   await expect(page.locator('#app h1')).toBeVisible();
   // Percorre do topo até o botão de envio
