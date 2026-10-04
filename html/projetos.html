@@ -1,0 +1,203 @@
+<!-- Tela "projetos": fragmento inserido pelo roteador em main#app (js/roteador.js) -->
+
+<!-- BLOCO 1 - Abertura: contextualiza a página antes de qualquer detalhe -->
+<section class="area-principal" aria-labelledby="titulo-projetos">
+  <h1 id="titulo-projetos">Projetos sociais</h1>
+  <p>
+    Três frentes complementares, todas gratuitas para o participante e sustentadas por doações
+    individuais e parcerias empresariais. Abaixo você encontra o detalhamento de cada iniciativa,
+    as campanhas de doação em andamento e as vagas abertas de voluntariado.
+  </p>
+</section>
+
+<!-- BLOCO 2 - Índice interno: atalho para os caminhos possíveis do visitante -->
+<nav class="indice area-lateral" aria-labelledby="indice-titulo">
+  <h2 id="indice-titulo">Nesta página</h2>
+  <ol>
+    <li><a href="#/projetos/lista-projetos">Iniciativas em andamento</a></li>
+    <li><a href="#/projetos/doacao">Campanhas de doação</a></li>
+    <li><a href="#/projetos/voluntariado">Frentes de voluntariado</a></li>
+    <li><a href="#/projetos/duvidas-frequentes">Dúvidas frequentes</a></li>
+  </ol>
+</nav>
+
+<!-- BLOCO 3 - Iniciativas: cada projeto é um article autocontido.
+     Os cartões são gerados de js/dados/projetos.js com o template tpl-projeto. -->
+<section class="grade cartoes cartoes-grandes" aria-labelledby="lista-projetos" data-lista="projetos">
+  <h2 id="lista-projetos">Iniciativas em andamento</h2>
+</section>
+
+<!-- BLOCO 3b - Resultados em gráfico (Chart.js, carregado só nesta tela por js/modulos/grafico.js).
+     A tabela tem os mesmos números: é a alternativa para leitor de tela e a reserva se o CDN falhar. -->
+<section class="bloco-grafico" aria-labelledby="titulo-grafico">
+  <h2 id="titulo-grafico">Pessoas formadas em 2025</h2>
+
+  <figure class="grafico">
+    <div class="grafico-area">
+      <canvas id="grafico-formados" role="img"
+              aria-label="Gráfico de barras: pessoas formadas em 2025 por projeto. Os números estão na tabela a seguir."></canvas>
+    </div>
+    <figcaption>Total de concluintes por projeto ao longo de 2025.</figcaption>
+  </figure>
+
+  <details class="grafico-dados">
+    <summary>Ver os números em tabela</summary>
+    <div class="tabela-rolagem" role="region" aria-label="Pessoas formadas em 2025 por projeto" tabindex="0">
+      <table>
+        <caption>Pessoas formadas em 2025 por projeto</caption>
+        <thead>
+          <tr>
+            <th scope="col">Projeto</th>
+            <th scope="col">Pessoas formadas</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<!-- BLOCO 4 - Doação: o que cada valor custeia e como contribuir -->
+<section class="bloco-par" aria-labelledby="doacao">
+  <h2 id="doacao">Campanhas de doação</h2>
+  <p>
+    Toda doação é direcionada ao custeio direto das turmas. Você pode escolher um projeto específico
+    ou deixar que o instituto aplique onde houver maior necessidade no trimestre.
+  </p>
+
+  <!-- Alerta estático: informação importante, sem role (não é resposta a uma ação) -->
+  <div class="alerta alerta--aviso">
+    <p class="alerta-titulo">Campanha de inverno: faltam R$ 3.200</p>
+    <p>Até 30 de novembro, esse valor garante o auxílio-transporte de 64 estudantes em dezembro.</p>
+  </div>
+
+  <h3>O que cada valor custeia</h3>
+  <div class="tabela-rolagem" role="region" aria-label="Equivalência entre valor doado e custeio mensal por estudante" tabindex="0">
+    <table>
+      <caption>Equivalência entre valor doado e custeio mensal por estudante</caption>
+      <thead>
+        <tr>
+          <th scope="col">Valor mensal</th>
+          <th scope="col">Destinação</th>
+          <th scope="col">Alcance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>R$ 50</td>
+          <td>Auxílio-transporte</td>
+          <td>1 estudante por mês</td>
+        </tr>
+        <tr>
+          <td>R$ 120</td>
+          <td>Material didático e lanche</td>
+          <td>1 turma por semana</td>
+        </tr>
+        <tr>
+          <td>R$ 400</td>
+          <td>Manutenção de notebooks emprestados</td>
+          <td>10 equipamentos por mês</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Formas de contribuir</h3>
+  <ul>
+    <li><strong>Doação recorrente:</strong> débito mensal automático, cancelável a qualquer momento;</li>
+    <li><strong>Doação pontual:</strong> Pix, boleto ou cartão, com recibo emitido em até 5 dias úteis;</li>
+    <li><strong>Doação de equipamentos:</strong> notebooks e monitores em funcionamento, com no máximo 6 anos de uso.</li>
+  </ul>
+
+  <p><a class="btn" href="#/cadastro/tipo-apoio">Quero doar</a></p>
+</section>
+
+<!-- BLOCO 5 - Voluntariado: vagas abertas e o caminho até a primeira atividade -->
+<section class="bloco-par" aria-labelledby="voluntariado">
+  <h2 id="voluntariado">Frentes de voluntariado</h2>
+  <p>
+    Não é preciso ser da área de tecnologia. As vagas abaixo estão abertas para o semestre corrente
+    e o compromisso mínimo é de um semestre letivo.
+  </p>
+
+  <h3>Vagas abertas</h3>
+  <div class="tabela-rolagem" role="region" aria-label="Frentes de voluntariado disponíveis no semestre" tabindex="0">
+    <table>
+      <caption>Frentes de voluntariado disponíveis no semestre</caption>
+      <thead>
+        <tr>
+          <th scope="col">Frente</th>
+          <th scope="col">Dedicação</th>
+          <th scope="col">Perfil desejado</th>
+          <th scope="col">Modalidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mentoria técnica</td>
+          <td>2 h/semana</td>
+          <td>Experiência em desenvolvimento ou dados</td>
+          <td>Presencial ou remoto</td>
+        </tr>
+        <tr>
+          <td>Apoio pedagógico em sala</td>
+          <td>4 h/semana</td>
+          <td>Licenciatura ou experiência com ensino</td>
+          <td>Presencial</td>
+        </tr>
+        <tr>
+          <td>Preparação para entrevistas</td>
+          <td>3 h/mês</td>
+          <td>Atuação em RH ou liderança de equipe</td>
+          <td>Remoto</td>
+        </tr>
+        <tr>
+          <td>Acolhimento infantil</td>
+          <td>3 h/semana</td>
+          <td>Experiência com crianças, sem exigência de formação</td>
+          <td>Presencial</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Como se tornar voluntário</h3>
+  <ol>
+    <li>Preencha o cadastro indicando a frente de interesse;</li>
+    <li>Participe da conversa de alinhamento (30 minutos, online);</li>
+    <li>Faça a formação inicial sobre proteção e conduta (2 horas);</li>
+    <li>Seja alocado em um núcleo e inicie as atividades.</li>
+  </ol>
+
+  <p><a class="btn" href="#/cadastro/tipo-apoio">Quero ser voluntário</a></p>
+</section>
+
+<!-- BLOCO 6 - Dúvidas frequentes: pares pergunta/resposta em lista de definição -->
+<section class="area-principal" aria-labelledby="duvidas-frequentes">
+  <h2 id="duvidas-frequentes">Dúvidas frequentes</h2>
+
+  <dl>
+    <dt>Posso escolher para qual projeto vai minha doação?</dt>
+    <dd>Sim. O formulário de cadastro tem um campo para direcionar a contribuição.</dd>
+
+    <dt>A doação é dedutível no imposto de renda?</dt>
+    <dd>Sim, para doações a projetos incentivados. O recibo é emitido com o número do enquadramento.</dd>
+
+    <dt>Preciso morar em Campinas para ser voluntário?</dt>
+    <dd>Não. Mentoria técnica e preparação para entrevistas funcionam de forma totalmente remota.</dd>
+
+    <dt>Existe idade mínima para o voluntariado?</dt>
+    <dd>Sim, 18 anos completos, por exigência da política de proteção à criança e ao adolescente.</dd>
+  </dl>
+</section>
+
+<!-- BLOCO 7 - Conteúdo complementar: canal direto para quem ficou com dúvida -->
+<aside class="area-lateral" aria-labelledby="apoie-projeto">
+  <h2 id="apoie-projeto">Ainda em dúvida sobre como apoiar?</h2>
+  <p>
+    Fale com a coordenação de captação pelo e-mail
+    <a href="mailto:apoio@pontedigital.org.br">apoio@pontedigital.org.br</a>
+    antes de preencher o cadastro. Respondemos em até dois dias úteis.
+  </p>
+  <p><a class="btn" href="#/cadastro">Ir para o cadastro</a></p>
+</aside>

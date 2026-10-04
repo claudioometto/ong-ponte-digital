@@ -1,0 +1,128 @@
+<!-- Tela "componentes": fragmento inserido pelo roteador em main#app (js/roteador.js) -->
+
+<section class="area-principal" aria-labelledby="titulo-guia">
+  <h1 id="titulo-guia">Guia de componentes de feedback</h1>
+  <p>
+    Referência para quem for integrar o back-end da plataforma. Cada componente usa apenas os
+    tokens de <code>css/style.css</code> e tem uma estrutura HTML fixa: basta trocar o texto
+    e escolher a variação pela classe.
+  </p>
+</section>
+
+<nav class="indice area-lateral" aria-labelledby="guia-indice">
+  <h2 id="guia-indice">Nesta página</h2>
+  <ol>
+    <li><a href="#/componentes/guia-badges">Badges</a></li>
+    <li><a href="#/componentes/guia-alertas">Alertas</a></li>
+    <li><a href="#/componentes/guia-toast">Toast</a></li>
+    <li><a href="#/componentes/guia-modal">Modal</a></li>
+  </ol>
+</nav>
+
+<section aria-labelledby="guia-badges">
+  <h2 id="guia-badges">Badges</h2>
+  <p>Etiquetas curtas de categoria ou situação. Sempre com texto: a cor reforça o sentido, não o substitui.</p>
+  <ul class="badges" aria-label="Variações de badge">
+    <li class="badge">Neutro</li>
+    <li class="badge badge--info">Informação</li>
+    <li class="badge badge--sucesso">Sucesso</li>
+    <li class="badge badge--aviso">Aviso</li>
+    <li class="badge badge--erro">Erro</li>
+    <li class="badge badge--destaque">Destaque</li>
+  </ul>
+  <pre class="codigo"><code>&lt;ul class="badges" aria-label="Situação do projeto"&gt;
+&lt;li class="badge badge--sucesso"&gt;Inscrições abertas&lt;/li&gt;
+&lt;li class="badge"&gt;9 meses&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+</section>
+
+<section aria-labelledby="guia-alertas">
+  <h2 id="guia-alertas">Alertas</h2>
+  <p>
+    Mensagem que fica na página até ser resolvida. Use <code>role="alert"</code> só no alerta que surge
+    depois de uma ação (como o resumo de erros do cadastro); alerta estático não leva role.
+  </p>
+  <div class="alerta alerta--info">
+    <p class="alerta-titulo">Informação</p>
+    <p>Orientação que ajuda antes da ação: tempo de preenchimento, regras, prazos.</p>
+  </div>
+  <div class="alerta alerta--sucesso">
+    <p class="alerta-titulo">Sucesso</p>
+    <p>Confirmação que precisa permanecer visível, como um recibo gerado.</p>
+  </div>
+  <div class="alerta alerta--aviso">
+    <p class="alerta-titulo">Aviso</p>
+    <p>Algo pede atenção, mas não impede nada: prazo de campanha, vagas acabando.</p>
+  </div>
+  <div class="alerta alerta--erro alerta--fechavel">
+    <p class="alerta-titulo">Erro</p>
+    <p>Algo impediu a ação e precisa de correção. Este exemplo pode ser fechado.</p>
+    <button type="button" class="botao-fechar">
+      <span aria-hidden="true">&times;</span>
+      <span class="visually-hidden">Fechar alerta</span>
+    </button>
+  </div>
+  <pre class="codigo"><code>&lt;div class="alerta alerta--aviso"&gt;
+&lt;p class="alerta-titulo"&gt;Campanha de inverno: faltam R$ 3.200&lt;/p&gt;
+&lt;p&gt;Até 30 de novembro, esse valor garante...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+<section aria-labelledby="guia-toast">
+  <h2 id="guia-toast">Toast</h2>
+  <p>
+    Notificação que não interrompe: surge no canto da tela, é anunciada pelo leitor de tela sem mover
+    o foco, some sozinha em 8 segundos (a contagem pausa com o mouse ou o foco em cima) e pode ser fechada.
+  </p>
+  <div class="guia-exemplos">
+    <div class="toast toast--sucesso">
+      <p class="toast-titulo">Cadastro enviado</p>
+      <p>Em até 2 dias úteis a coordenação entra em contato pelo e-mail informado.</p>
+    </div>
+    <div class="toast toast--erro">
+      <p class="toast-titulo">Falha na conexão</p>
+      <p>Seus dados não se perderam. Tente enviar de novo em instantes.</p>
+    </div>
+  </div>
+  <p>
+    <button type="button" class="btn btn--primario" data-toast="sucesso"
+            data-toast-titulo="Cadastro enviado"
+            data-toast-texto="Em até 2 dias úteis a coordenação entra em contato pelo e-mail informado.">Mostrar um toast</button>
+  </p>
+  <pre class="codigo"><code>// No retorno do servidor:
+PonteFeedback.toast('sucesso', 'Cadastro enviado', 'Em até 2 dias úteis...');
+PonteFeedback.toast('erro', 'Falha na conexão', 'Tente enviar de novo.');</code></pre>
+</section>
+
+<section aria-labelledby="guia-modal">
+  <h2 id="guia-modal">Modal</h2>
+  <p>
+    Janela sobre a página para informação que merece atenção total. Usa o elemento
+    <code>dialog</code> nativo: o foco fica preso dentro dele, Esc fecha, e o foco volta ao botão que o abriu.
+  </p>
+  <p>
+    <button type="button" class="btn btn--primario" data-abre-modal="modal-exemplo">Abrir modal de exemplo</button>
+  </p>
+  <pre class="codigo"><code>&lt;button type="button" data-abre-modal="modal-lgpd"&gt;Como usamos seus dados&lt;/button&gt;
+&lt;dialog class="modal" id="modal-lgpd" aria-labelledby="modal-lgpd-titulo"&gt; ... &lt;/dialog&gt;</code></pre>
+</section>
+
+
+<dialog class="modal" id="modal-exemplo" aria-labelledby="modal-exemplo-titulo">
+<form method="dialog" class="modal-caixa">
+  <div class="modal-cabecalho">
+    <h2 id="modal-exemplo-titulo">Modal de exemplo</h2>
+    <button class="botao-fechar" value="fechar">
+      <span aria-hidden="true">&times;</span>
+      <span class="visually-hidden">Fechar</span>
+    </button>
+  </div>
+  <div class="modal-corpo">
+    <p>Cabeçalho com título e botão de fechar, corpo com o conteúdo e rodapé com a ação principal.</p>
+    <p>Clique no fundo escuro, aperte Esc ou use um dos botões para fechar.</p>
+  </div>
+  <div class="modal-rodape">
+    <button class="btn btn--primario" value="ok">Entendi</button>
+  </div>
+</form>
+</dialog>

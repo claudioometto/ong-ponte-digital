@@ -1,0 +1,78 @@
+<!-- Tela "inicio": fragmento inserido pelo roteador em main#app (js/roteador.js) -->
+
+<!-- Bloco de abertura: h1 único da página -->
+<section class="hero grade" aria-labelledby="titulo-principal">
+  <h1 id="titulo-principal">Tecnologia que encurta a distância entre a periferia e o primeiro emprego</h1>
+  <p>
+    O Instituto Ponte Digital forma jovens de 14 a 24 anos das regiões periféricas de Campinas (SP)
+    em programação, dados e cidadania digital — e os acompanha até a contratação.
+  </p>
+  <p><a class="btn" href="#/cadastro">Quero doar ou ser voluntário</a></p>
+
+  <!-- Imagem informativa: alt descreve a cena, pois ela agrega informação ao texto -->
+  <picture>
+    <source srcset="imagens/hero-turma.webp" type="image/webp">
+    <img class="hero-img"
+         src="imagens/hero-turma.jpg"
+         alt="Cinco jovens lado a lado em frente a notebooks durante uma aula do projeto Código na Quebrada"
+         width="960" height="420">
+  </picture>
+</section>
+
+<section aria-labelledby="quem-somos">
+  <h2 id="quem-somos">Quem somos</h2>
+  <p>
+    Somos uma organização da sociedade civil sem fins lucrativos, fundada em 2016 por educadores e
+    profissionais de tecnologia. Atuamos em quatro bairros com turmas gratuitas, equipamento emprestado
+    e auxílio-transporte, porque entendemos que acesso não se resolve só com aula.
+  </p>
+
+  <h3>Missão</h3>
+  <p>Garantir que a origem do jovem não determine seu repertório técnico nem seu acesso ao mercado de trabalho.</p>
+
+  <figure>
+    <picture>
+      <source srcset="imagens/equipe.webp" type="image/webp">
+      <img src="imagens/equipe.jpg"
+           alt="Educadores e mentores voluntários reunidos na sede do instituto"
+           width="640" height="400">
+    </picture>
+    <figcaption>Equipe fixa e mentores voluntários do núcleo Jardim São Marcos, em 2025.</figcaption>
+  </figure>
+
+  <h3>Como trabalhamos</h3>
+  <ul>
+    <li>Turmas presenciais gratuitas em espaços cedidos por escolas públicas parceiras;</li>
+    <li>Mentoria individual com profissionais voluntários da área de tecnologia;</li>
+    <li>Encaminhamento para vagas de estágio e aprendiz em empresas parceiras.</li>
+  </ul>
+</section>
+
+<!-- Indicadores gerados de js/dados/impacto.js com o template tpl-indicador -->
+<section class="grade cartoes" aria-labelledby="impacto" data-lista="impacto">
+  <h2 id="impacto">Nosso impacto em 2025</h2>
+</section>
+
+<section class="area-principal" aria-labelledby="como-apoiar">
+  <h2 id="como-apoiar">Como apoiar</h2>
+
+  <h3>Doação recorrente</h3>
+  <p>R$ 50 por mês cobrem o auxílio-transporte de um estudante durante um semestre letivo.</p>
+
+  <h3>Voluntariado</h3>
+  <p>Duas horas semanais de mentoria técnica ou apoio administrativo, presencial ou a distância.</p>
+
+  <h3>Parceria empresarial</h3>
+  <p>Cessão de equipamentos, bolsas de estudo ou abertura de vagas de aprendiz e estágio.</p>
+</section>
+
+<!-- Conteúdo complementar, relacionado mas não essencial à leitura principal -->
+<aside class="area-lateral" aria-labelledby="transparencia">
+  <!-- Imagem puramente decorativa: alt vazio para o leitor de tela ignorá-la -->
+  <img src="imagens/ornamento.svg" alt="" width="64" height="64">
+  <h2 id="transparencia">Transparência</h2>
+  <p>
+    Publicamos trimestralmente o demonstrativo de receitas e despesas, auditado por contabilidade
+    voluntária. Em 2025, 82% dos recursos foram aplicados diretamente em atividade-fim.
+  </p>
+</aside>
