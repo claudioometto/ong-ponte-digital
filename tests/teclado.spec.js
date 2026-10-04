@@ -36,14 +36,27 @@ test('menu do celular abre com Enter e fecha com Esc, devolvendo o foco', async 
   await expect(botao).toBeFocused();
 });
 
-test('no desktop, o submenu abre quando o foco do Tab entra nele', async ({ page, isMobile }) => {
+test('no desktop, o Tab passa pelo submenu fechado e a seta o abre com Enter', async ({ page, isMobile }) => {
   test.skip(isMobile, 'Comportamento do desktop');
   await page.goto('/#/');
+  await expect(page.locator('#app h1')).toBeVisible();
+  const seta = page.locator('.submenu-botao');
   await page.locator('#menu-principal a[href="#/projetos"]').focus();
-  await expect(page.locator('.submenu-botao')).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#submenu-projetos a').first()).toBeVisible();
+  await expect(seta).toHaveAttribute('aria-expanded', 'false');
+  await page.keyboard.press('Tab');
+  await expect(seta).toBeFocused();
+  // Fechado: o próximo Tab pula os links do submenu
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#menu-principal > li > a[href="#/cadastro"]')).toBeFocused();
+  // Aberto pela seta: o Tab entra no submenu; Esc fecha e devolve o foco à seta
+  await seta.focus();
+  await page.keyboard.press('Enter');
+  await expect(seta).toHaveAttribute('aria-expanded', 'true');
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#submenu-projetos a').first()).toBeFocused();
   await page.keyboard.press('Escape');
-  await expect(page.locator('.submenu-botao')).toHaveAttribute('aria-expanded', 'false');
+  await expect(seta).toHaveAttribute('aria-expanded', 'false');
+  await expect(seta).toBeFocused();
 });
 
 test('todo elemento que recebe foco pelo Tab no cadastro mostra o contorno de foco', async ({ page }) => {
