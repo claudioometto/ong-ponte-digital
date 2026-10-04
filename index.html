@@ -125,8 +125,9 @@
       <ul class="badges" aria-label="Situação do projeto" data-campo="badges"></ul>
       <figure>
         <picture>
+          <source type="image/avif" data-campo="imagem-avif">
           <source type="image/webp" data-campo="imagem-webp">
-          <img data-campo="imagem" alt="" width="480" height="270">
+          <img data-campo="imagem" alt="" width="480" height="270" loading="lazy" decoding="async">
         </picture>
         <figcaption data-campo="legenda"></figcaption>
       </figure>

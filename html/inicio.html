@@ -9,13 +9,22 @@
   </p>
   <p><a class="btn" href="#/cadastro">Quero doar ou ser voluntário</a></p>
 
-  <!-- Imagem informativa: alt descreve a cena, pois ela agrega informação ao texto -->
+  <!-- Imagem informativa: alt descreve a cena, pois ela agrega informação ao texto.
+       Formatos do mais leve ao mais compatível (AVIF, WebP, JPEG); duas larguras para o
+       celular baixar a menor. É a maior imagem visível ao abrir: fetchpriority="high". -->
   <picture>
-    <source srcset="imagens/hero-turma.webp" type="image/webp">
+    <source type="image/avif"
+            srcset="imagens/hero-turma-480.avif 480w, imagens/hero-turma-960.avif 960w"
+            sizes="(min-width: 64em) 37.5rem, 100vw">
+    <source type="image/webp"
+            srcset="imagens/hero-turma-480.webp 480w, imagens/hero-turma-960.webp 960w"
+            sizes="(min-width: 64em) 37.5rem, 100vw">
     <img class="hero-img"
-         src="imagens/hero-turma.jpg"
+         src="imagens/hero-turma-960.jpg"
+         srcset="imagens/hero-turma-480.jpg 480w, imagens/hero-turma-960.jpg 960w"
+         sizes="(min-width: 64em) 37.5rem, 100vw"
          alt="Cinco jovens lado a lado em frente a notebooks durante uma aula do projeto Código na Quebrada"
-         width="960" height="420">
+         width="960" height="420" fetchpriority="high" decoding="async">
   </picture>
 </section>
 
@@ -31,11 +40,19 @@
   <p>Garantir que a origem do jovem não determine seu repertório técnico nem seu acesso ao mercado de trabalho.</p>
 
   <figure>
+    <!-- Abaixo da dobra: loading="lazy" só baixa quando a pessoa rola até perto dela -->
     <picture>
-      <source srcset="imagens/equipe.webp" type="image/webp">
-      <img src="imagens/equipe.jpg"
+      <source type="image/avif"
+              srcset="imagens/equipe-320.avif 320w, imagens/equipe-640.avif 640w"
+              sizes="(min-width: 40em) 40rem, 100vw">
+      <source type="image/webp"
+              srcset="imagens/equipe-320.webp 320w, imagens/equipe-640.webp 640w"
+              sizes="(min-width: 40em) 40rem, 100vw">
+      <img src="imagens/equipe-640.jpg"
+           srcset="imagens/equipe-320.jpg 320w, imagens/equipe-640.jpg 640w"
+           sizes="(min-width: 40em) 40rem, 100vw"
            alt="Educadores e mentores voluntários reunidos na sede do instituto"
-           width="640" height="400">
+           width="640" height="400" loading="lazy" decoding="async">
     </picture>
     <figcaption>Equipe fixa e mentores voluntários do núcleo Jardim São Marcos, em 2025.</figcaption>
   </figure>
