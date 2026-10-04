@@ -1,0 +1,31 @@
+{
+  "name": "ong-ponte-digital",
+  "version": "3.1.0",
+  "private": true,
+  "description": "Plataforma web do Instituto Ponte Digital (ONG fictícia): SPA em HTML, CSS e JavaScript.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "node scripts/servidor.mjs . 8080",
+    "imagens": "node scripts/imagens.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/servidor.mjs dist 4173",
+    "test": "playwright test",
+    "test:instalar": "playwright install chromium"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/claudioometto/ong-ponte-digital.git"
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "esbuild": "^0.28.2",
+    "html-minifier-terser": "^7.2.0",
+    "sharp": "^0.35.5",
+    "svgo": "^4.1.0"
+  }
+}

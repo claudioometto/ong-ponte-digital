@@ -27,12 +27,18 @@ export function aplicarCadastro(raiz) {
   const form = raiz.querySelector('#form-apoio');
   if (!form) return;
 
+  let enviando = false;
+
   form.addEventListener('submit', async (evento) => {
     evento.preventDefault();   // a SPA envia por script; o navegador não recarrega
+    if (enviando) return;      // evita envio duplicado por clique ou Enter repetido
 
+    /* aria-disabled em vez de disabled: um botão disabled perde o foco e quem
+       usa teclado ou leitor de tela ficava "no nada" (body) durante o envio. */
     const botao = form.querySelector('button[type="submit"]');
     const rotulo = botao.textContent;
-    botao.disabled = true;      // evita envio duplicado por clique repetido
+    enviando = true;
+    botao.setAttribute('aria-disabled', 'true');
     botao.textContent = 'Enviando…';
 
     try {
@@ -48,7 +54,8 @@ export function aplicarCadastro(raiz) {
       toast('erro', 'Não foi possível enviar',
             'Verifique sua conexão e tente novamente. O que você preencheu continua no formulário.');
     } finally {
-      botao.disabled = false;
+      enviando = false;
+      botao.removeAttribute('aria-disabled');
       botao.textContent = rotulo;
     }
   });

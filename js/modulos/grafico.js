@@ -27,6 +27,17 @@ function token(nome) {
   return getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
 }
 
+/* Troca de tema (tema.js): as cores do gráfico vêm dos tokens, então são
+   lidas de novo e o gráfico se redesenha sem recriar o canvas */
+document.addEventListener('tema-alterado', () => {
+  if (!grafico) return;
+  const nova = configuracao();
+  grafico.data.datasets[0].backgroundColor = nova.data.datasets[0].backgroundColor;
+  grafico.data.datasets[0].hoverBackgroundColor = nova.data.datasets[0].hoverBackgroundColor;
+  grafico.options.scales = nova.options.scales;
+  grafico.update();
+});
+
 /* Tabela com os mesmos dados do gráfico (alternativa e reserva) */
 function preencherTabela(corpo) {
   corpo.replaceChildren();

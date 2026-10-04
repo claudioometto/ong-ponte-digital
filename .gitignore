@@ -1,0 +1,17 @@
+# Dependências e saída de build
+node_modules/
+dist/
+
+# Deploy
+.vercel/
+
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+*.log
+
+# Relatórios de teste (Playwright)
+test-results/
+playwright-report/
