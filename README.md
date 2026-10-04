@@ -4,8 +4,8 @@ Site institucional de uma organização do terceiro setor que forma jovens de 14
 periferias de Campinas/SP em tecnologia. É uma SPA (Single Page Application) em HTML, CSS e
 JavaScript puros, sem framework, com cadastro de doadores e voluntários.
 
-- **Produção:** endereço publicado na etapa de deploy (issue #11)
-- **Versão atual:** 3.0.0 — histórico em [CHANGELOG.md](CHANGELOG.md) e nas [releases](https://github.com/claudioometto/ong-ponte-digital/releases)
+- **Produção:** https://ong-ponte-digital.vercel.app (Vercel, publicado a cada release na `main`)
+- **Versão atual:** 3.1.0 — histórico em [CHANGELOG.md](CHANGELOG.md) e nas [releases](https://github.com/claudioometto/ong-ponte-digital/releases)
 - **Projeto acadêmico:** Experiências Práticas de Desenvolvimento Front-end (Análise e Desenvolvimento de Sistemas)
 
 ## Sumário
@@ -161,6 +161,12 @@ Gera o build, sobe a prévia e roda a suíte do Playwright contra ela, em deskto
 | `tests/cadastro.spec.js` | Mensagens de erro, CPF com dígito verificador, máscara, rascunho que não guarda o CPF |
 | `tests/acessibilidade.spec.js` | axe-core com as regras WCAG 2.1 A e AA nas cinco telas, nos três temas |
 | `tests/tema.spec.js` | Preferência do sistema, seletor, persistência, contraste medido por tema e modo de cores forçadas |
+
+Para conferir o site publicado, a mesma suíte roda contra o endereço de produção, sem servidor local:
+
+```bash
+BASE_URL=https://ong-ponte-digital.vercel.app npm test
+```
 
 Um teste marcado com `test.fail` documenta uma falha conhecida e ligada a uma issue: a suíte segue
 verde e, quando a falha for corrigida, o Playwright avisa que o teste passou e a marcação deve sair.

@@ -12,9 +12,13 @@ test('o navegador baixa a foto do topo em AVIF, não em JPEG', async ({ page }) 
 
 test('em tela estreita de densidade 1, a foto do topo vem na largura de 480px', async ({ browser }) => {
   // Celulares de alta densidade (ex.: 2,6x) podem pedir a de 960 para nitidez: é o srcset funcionando
-  const contexto = await browser.newContext({ viewport: { width: 400, height: 800 }, deviceScaleFactor: 1 });
+  const contexto = await browser.newContext({
+    viewport: { width: 400, height: 800 },
+    deviceScaleFactor: 1,
+    baseURL: test.info().project.use.baseURL
+  });
   const page = await contexto.newPage();
-  await page.goto('http://localhost:4173/#/');
+  await page.goto('/#/');
   await expect.poll(() => page.locator('.hero-img').evaluate((img) => img.currentSrc)).toMatch(/hero-turma-480\.avif$/);
   await contexto.close();
 });
