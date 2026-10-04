@@ -116,7 +116,8 @@ Gera o build, sobe a prévia e roda a suíte do Playwright contra ela, em deskto
 | Arquivo | O que confere |
 |---|---|
 | `tests/navegacao.spec.js` | Cada rota mostra a tela certa, título, `aria-current`, foco no h1, botão voltar, tabela de reserva sem o CDN |
-| `tests/teclado.spec.js` | Menu do celular com Enter e Esc, submenu do desktop pelo Tab, foco visível em todo o formulário |
+| `tests/teclado.spec.js` | Link de pular, menu do celular com Enter e Esc, submenu do desktop pela seta, foco visível em todo o formulário |
+| `tests/foco-leitor.spec.js` | Foco nunca cai no `body` (toast, alerta, rascunho, histórico, envio) e nomes acessíveis sem duplicação nem asterisco |
 | `tests/cadastro.spec.js` | Mensagens de erro, CPF com dígito verificador, máscara, rascunho que não guarda o CPF |
 | `tests/acessibilidade.spec.js` | axe-core com as regras WCAG 2.1 A e AA nas cinco telas |
 
@@ -186,6 +187,9 @@ Meta: WCAG 2.1 nível AA.
 - Hierarquia de títulos sem saltos, um `h1` por tela, regiões nomeadas (`aria-labelledby`, `aria-label` em cada `nav`)
 - Troca de tela anunciada: o roteador leva o foco ao `h1` e atualiza o título da aba
 - Foco sempre visível (anel de 3px), menu e submenu operáveis por teclado, Esc fecha e devolve o foco
+- Submenu no padrão "disclosure" da WAI: abre pela seta (Enter ou Espaço), então o Tab não passa por links escondidos
+- Foco nunca se perde: ao fechar toast ou alerta, descartar o rascunho, apagar o histórico e durante o envio (o botão usa `aria-disabled`, não `disabled`)
+- Nomes acessíveis limpos: logotipo com `alt=""` ao lado do nome em texto; asterisco dos rótulos com `aria-hidden` (o `required` já anuncia "obrigatório")
 - Formulário: `label` em todo campo, grupos em `fieldset`/`legend`, erros ligados por `aria-describedby` e marcados com `aria-invalid`
 - Toasts em região `aria-live`; movimento reduzido respeitado (`prefers-reduced-motion`)
 - Verificação: axe-core automático nas cinco telas (`npm test`) e W3C Nu Html Checker sem erros
