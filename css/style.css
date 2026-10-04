@@ -191,6 +191,15 @@ img { max-width: 100%; height: auto; }
   outline-offset: var(--foco-afastamento);
 }
 
+/* Campo de data: quando o Tab chega ao ícone do calendário, o navegador tira o
+   :focus-visible e o :focus do input (o foco fica no ícone, dentro do campo) e o
+   anel sumia (issue #13). :focus-within cobre esse trecho. No clique, campos
+   de texto já mostram o anel, então nada muda para quem usa mouse. */
+input[type="date"]:focus-within {
+  outline: var(--foco-largura) solid var(--cor-foco);
+  outline-offset: var(--foco-afastamento);
+}
+
 /* Título e seção recebem foco do roteador (tabindex="-1") só para o leitor de
    tela anunciar a troca de tela. Não são clicáveis: o anel confundiria. */
 [tabindex="-1"]:focus { outline: none; }
@@ -762,6 +771,7 @@ select:hover,
 textarea:hover { border-color: var(--cor-texto-suave); }
 
 input:focus-visible,
+input[type="date"]:focus-within,
 select:focus-visible,
 textarea:focus-visible { border-color: var(--cor-primaria); }
 
