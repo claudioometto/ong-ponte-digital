@@ -13,6 +13,7 @@ versões no padrão [SemVer](https://semver.org/lang/pt-BR/).
 - Modelos de issue e pull request; `.gitignore`
 - Link "Pular para o conteúdo" (WCAG 2.4.1)
 - Temas escuro e alto contraste, automáticos pelo sistema ou pelo seletor "Tema"; suporte a `forced-colors`
+- Fotos em AVIF, WebP e JPEG otimizados (`npm run imagens`), com `srcset`, `loading="lazy"` e `fetchpriority`; SVGs otimizados no build. Fotos 65% menores em AVIF
 
 ### Corrigido
 - Âncora comum (`#app`) era tratada como rota e mostrava "Página não encontrada"

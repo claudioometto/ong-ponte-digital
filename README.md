@@ -42,7 +42,7 @@ JavaScript puros, sem framework, com cadastro de doadores e voluntários.
 | Estilo | CSS3 | Variáveis (design system), Grid de 12 colunas, Flexbox, media queries mobile-first, `prefers-reduced-motion` |
 | Comportamento | JavaScript (ES2020, módulos ES) | Roteador, templates, Constraint Validation API, `localStorage`, `fetch`, `CustomEvent` |
 | Biblioteca | [Chart.js 4.5.1](https://www.chartjs.org/) | Gráfico de barras, importado do CDN jsDelivr só na tela de projetos |
-| Build | [esbuild](https://esbuild.github.io/) e [html-minifier-terser](https://github.com/terser/html-minifier-terser) | Bundle e minificação de JS, CSS e HTML |
+| Build | [esbuild](https://esbuild.github.io/), [html-minifier-terser](https://github.com/terser/html-minifier-terser), [sharp](https://sharp.pixelplumbing.com/) e [SVGO](https://svgo.dev/) | Bundle e minificação de JS, CSS e HTML; fotos em AVIF/WebP/JPEG; SVG otimizado |
 | Testes | [Playwright](https://playwright.dev/) e [axe-core](https://github.com/dequelabs/axe-core) | Testes de ponta a ponta e auditoria WCAG 2.1 AA |
 | Versionamento | Git e GitHub | GitFlow, Conventional Commits, issues, milestones, pull requests e releases |
 
@@ -94,17 +94,39 @@ npm run preview    # serve dist/ em http://localhost:4173
 
 O `scripts/build.mjs` não altera o código-fonte. Ele junta `js/app.js` e os módulos que ele
 importa em um único arquivo minificado (o Chart.js continua vindo do CDN), minifica o CSS e o
-HTML da casca e dos fragmentos e copia as imagens. Ao final, imprime o tamanho antes e depois:
+HTML da casca e dos fragmentos, otimiza os SVGs (svgo) e copia as fotos já otimizadas, deixando
+`imagens/originais/` de fora. Ao final, imprime o tamanho antes e depois:
 
 | Grupo | Fonte | Build | Redução |
 |---|---|---|---|
-| JavaScript (15 arquivos → 1) | 50,1 KB | 20,0 KB | 60% |
-| CSS | 38,9 KB | 23,4 KB | 40% |
-| HTML | 39,3 KB | 30,8 KB | 22% |
-| Imagens | 40,1 KB | 40,1 KB | 0% |
-| **Total** | **168,3 KB** | **114,2 KB** | **32%** |
+| JavaScript (16 arquivos → 1) | 55,1 KB | 21,7 KB | 61% |
+| CSS | 46,3 KB | 27,8 KB | 40% |
+| HTML | 42,3 KB | 32,5 KB | 23% |
+| SVG | 0,6 KB | 0,6 KB | 5% |
+| **Total** | **144,3 KB** | **82,5 KB** | **43%** |
 
 É a pasta `dist/` que vai para o servidor de produção.
+
+### Imagens
+
+```bash
+npm run imagens    # rodar ao incluir ou trocar uma foto em imagens/originais/
+```
+
+O `scripts/imagens.mjs` (sharp) gera cada foto em três formatos, servidos por `<picture>` do mais
+leve ao mais compatível: **AVIF** → **WebP** → **JPEG** (mozjpeg, progressivo). A foto do topo e a
+da equipe saem em duas larguras (`srcset` + `sizes`), para o celular baixar a menor. Ícones e
+logotipo ficam em **SVG**: vetoriais, nítidos em qualquer densidade de tela.
+
+| Formato | Peso total das 5 fotos (largura maior) | Redução sobre os originais (28,2 KB) |
+|---|---|---|
+| AVIF | 10,0 KB | 65% |
+| WebP | 10,2 KB | 64% |
+| JPEG | 18,7 KB | 34% |
+
+A foto do topo tem `fetchpriority="high"` (é a maior imagem visível ao abrir); as demais usam
+`loading="lazy"` e só são baixadas quando a pessoa rola até perto delas. Todas declaram `width` e
+`height`, o que evita salto de layout.
 
 ## Testes
 
@@ -138,7 +160,8 @@ ong-ponte-digital/
 │   ├── componentes.html
 │   └── nao-encontrada.html
 ├── css/style.css         Design system (tokens), grade de 12 colunas e componentes
-├── imagens/              Logotipo e ornamento (SVG); fotos (JPG + WebP)
+├── imagens/              Logotipo e ornamento (SVG); fotos em AVIF, WebP e JPEG
+│   └── originais/          Fotos de origem (fora do build), entrada do npm run imagens
 ├── js/
 │   ├── app.js            Ponto de entrada: importa e liga os módulos
 │   ├── roteador.js       Lê o hash, busca o fragmento e o insere em main#app
@@ -146,7 +169,7 @@ ong-ponte-digital/
 │   ├── servicos/         Rede e armazenamento, sem acesso ao DOM
 │   ├── templates/        Clonagem e preenchimento dos elementos template
 │   └── dados/            Projetos e indicadores
-├── scripts/              servidor.mjs (desenvolvimento) e build.mjs (produção)
+├── scripts/              servidor.mjs (desenvolvimento), imagens.mjs e build.mjs (produção)
 ├── tests/                Testes do Playwright
 ├── .github/              Modelos de issue e pull request
 ├── package.json          Comandos npm e ferramentas de desenvolvimento
