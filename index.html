@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Instituto Ponte Digital: ONG que forma jovens de 14 a 24 anos das periferias de Campinas em tecnologia e os conecta ao primeiro emprego.">
+  <title>Instituto Ponte Digital | Educação em tecnologia para a juventude periférica</title>
+  <link rel="icon" href="imagens/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Marca que o JavaScript está ativo: só então o CSS recolhe o menu -->
+  <script>document.documentElement.classList.add('js');</script>
+  <!-- Ponto de entrada da SPA. Módulo ES: carrega depois do HTML e importa o resto de js/ -->
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+
+  <!--
+    Casca da SPA: cabeçalho e rodapé ficam fixos; só o conteúdo de main#app
+    é trocado pelo roteador, a partir dos fragmentos da pasta html/.
+  -->
+
+  <!-- Cabeçalho institucional: identidade + navegação primária -->
+  <header class="site-header">
+    <a class="brand" href="#/">
+      <img src="imagens/logo.svg" alt="Instituto Ponte Digital" width="48" height="48">
+      <span class="brand-name">Instituto Ponte Digital</span>
+    </a>
+
+    <nav class="nav-principal" aria-label="Navegação principal">
+      <!-- Botão hambúrguer: aparece só abaixo de 768px e com JavaScript ativo -->
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-icone" aria-hidden="true"></span>
+        Menu
+      </button>
+
+      <ul class="menu" id="menu-principal">
+        <li><a href="#/">Início</a></li>
+        <li class="tem-submenu">
+          <a href="#/projetos">Projetos sociais</a>
+          <button type="button" class="submenu-botao" aria-expanded="false" aria-controls="submenu-projetos">
+            <span class="visually-hidden">Submenu de Projetos sociais</span>
+          </button>
+          <!-- Os links de cada projeto são gerados de js/dados/projetos.js -->
+          <ul class="submenu" id="submenu-projetos">
+            <li><a href="#/projetos/doacao">Campanhas de doação</a></li>
+            <li><a href="#/projetos/voluntariado">Frentes de voluntariado</a></li>
+          </ul>
+        </li>
+        <li><a href="#/cadastro">Seja apoiador</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="grade" id="app">
+    <noscript>
+      <section>
+        <h1>Instituto Ponte Digital</h1>
+        <p>Este site precisa de JavaScript para exibir as páginas. Ative-o no navegador ou fale conosco pelo e-mail contato@pontedigital.org.br.</p>
+      </section>
+    </noscript>
+  </main>
+
+  <footer class="site-footer grade">
+    <h2 class="visually-hidden">Informações institucionais</h2>
+
+    <address>
+      Instituto Ponte Digital — CNPJ 12.345.678/0001-90<br>
+      Rua das Acácias, 210 — Jardim São Marcos, Campinas/SP, CEP 13082-000<br>
+      Telefone: <a href="tel:+551932000000">(19) 3200-0000</a> —
+      E-mail: <a href="mailto:contato@pontedigital.org.br">contato@pontedigital.org.br</a>
+    </address>
+
+    <nav aria-label="Navegação do rodapé">
+      <ul class="menu">
+        <li><a href="#/">Início</a></li>
+        <li><a href="#/projetos">Projetos sociais</a></li>
+        <li><a href="#/cadastro">Seja apoiador</a></li>
+        <li><a href="#/componentes">Guia de componentes</a></li>
+      </ul>
+    </nav>
+
+    <p><small>&copy; 2026 Instituto Ponte Digital. Organização da sociedade civil sem fins lucrativos.</small></p>
+  </footer>
+
+  <!--
+    Templates: marcação dos componentes repetidos. O conteúdo de um elemento
+    template não aparece na tela; js/templates/ clona e preenche os data-campo.
+  -->
+  <template id="tpl-projeto">
+    <article class="projeto">
+      <h3 data-campo="nome"></h3>
+      <ul class="badges" aria-label="Situação do projeto" data-campo="badges"></ul>
+      <figure>
+        <picture>
+          <source type="image/webp" data-campo="imagem-webp">
+          <img data-campo="imagem" alt="" width="480" height="270">
+        </picture>
+        <figcaption data-campo="legenda"></figcaption>
+      </figure>
+
+      <h4>O que é</h4>
+      <p data-campo="descricao"></p>
+
+      <h4>Quem atende</h4>
+      <p data-campo="publico"></p>
+
+      <h4>Resultados em 2025</h4>
+      <ul data-campo="resultados"></ul>
+
+      <p><a href="#/cadastro/tipo-apoio" data-campo="apoiar"></a></p>
+    </article>
+  </template>
+
+  <template id="tpl-indicador">
+    <article class="card">
+      <h3 data-campo="titulo"></h3>
+      <p><strong data-campo="valor"></strong></p>
+    </article>
+  </template>
+
+  <template id="tpl-envio">
+    <li>
+      <strong data-campo="nome"></strong>
+      <span data-campo="detalhe"></span>
+      <span data-campo="data"></span>
+    </li>
+  </template>
+
+  <!-- Região dos toasts: aria-live anuncia cada notificação sem tirar o foco de onde está -->
+  <div class="toasts" aria-live="polite"></div>
+
+</body>
+</html>

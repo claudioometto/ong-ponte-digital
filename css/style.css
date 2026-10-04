@@ -86,6 +86,7 @@
   --foco-largura:    3px;
   --foco-afastamento: 2px;
   --alvo-toque: 2.75rem;      /* 44px — área mínima de toque */
+  --grafico-altura: 15rem;    /* 240px — área do gráfico de resultados */
   --tamanho-marcador: 1.25rem; /* 20px — checkbox e radio */
   --alvo-compacto: 2rem;       /* 32px — acima do mínimo de 24px (WCAG 2.5.8) */
 
@@ -189,6 +190,10 @@ img { max-width: 100%; height: auto; }
   outline: var(--foco-largura) solid var(--cor-foco);
   outline-offset: var(--foco-afastamento);
 }
+
+/* Título e seção recebem foco do roteador (tabindex="-1") só para o leitor de
+   tela anunciar a troca de tela. Não são clicáveis: o anel confundiria. */
+[tabindex="-1"]:focus { outline: none; }
 
 
 /* 3. Layout — moldura da página e grade de 12 colunas
@@ -750,36 +755,48 @@ textarea:disabled {
   cursor: not-allowed;
 }
 
-/* Erro: só depois da interação (:user-invalid), nunca em campo intocado.
-   Três sinais, para não depender só da cor: borda vermelha engrossada
-   pela sombra, ícone de exclamação e a dica do campo virando aviso. */
-input:user-invalid,
-select:user-invalid,
-textarea:user-invalid {
+/* Erro: aria-invalid="true", posto por validacao.js só depois que a pessoa
+   sai do campo ou tenta enviar, nunca em campo intocado. Três sinais, para
+   não depender só da cor: borda vermelha engrossada pela sombra, ícone de
+   exclamação e a mensagem escrita logo abaixo do campo. */
+[aria-invalid="true"] {
   --icone-estado: var(--icone-erro);
   border-color: var(--cor-erro);
   box-shadow: 0 0 0 var(--borda-fina) var(--cor-erro);
 }
 
-input:user-invalid + .hint,
-select:user-invalid + .hint,
-textarea:user-invalid + .hint {
-  color: var(--cor-erro);
+/* Mensagem injetada pelo script; ligada ao campo por aria-describedby */
+.mensagem-erro {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--texto-sm);
   font-weight: var(--peso-semi);
+  color: var(--cor-erro);
 }
 
-input:user-invalid + .hint::before,
-select:user-invalid + .hint::before,
-textarea:user-invalid + .hint::before { content: "Atenção: "; }
+.mensagem-erro::before { content: "Atenção: "; }
 
-/* Sucesso: só em campo obrigatório preenchido corretamente. Campo
-   opcional vazio também é "válido", mas não merece um sinal de certo. */
-input:required:user-valid,
-select:required:user-valid,
-textarea:required:user-valid {
+/* Sucesso: aria-invalid="false", que o script só põe em campo obrigatório
+   preenchido corretamente. Campo opcional vazio não merece sinal de certo. */
+[aria-invalid="false"] {
   --icone-estado: var(--icone-sucesso);
   border-color: var(--cor-sucesso);
   box-shadow: 0 0 0 var(--borda-fina) var(--cor-sucesso);
+}
+
+/* Radio e checkbox: a sombra desenharia um quadrado em volta do controle.
+   O checkbox ganha contorno; no grupo de radios, quem acende é o fieldset
+   inteiro, porque o erro é da pergunta, e não de uma opção. */
+input[type="radio"][aria-invalid],
+input[type="checkbox"][aria-invalid] { box-shadow: none; }
+
+input[type="checkbox"][aria-invalid="true"] {
+  outline: calc(var(--borda-fina) * 2) solid var(--cor-erro);
+  outline-offset: var(--borda-fina);
+}
+
+.grupo-opcoes:has(input[type="radio"][aria-invalid="true"]) {
+  border-color: var(--cor-erro);
+  box-shadow: 0 0 0 var(--borda-fina) var(--cor-erro);
 }
 
 /* Botões do formulário: empilhados e em largura total no celular
@@ -1019,6 +1036,44 @@ textarea:required:user-valid {
 .botao-link:hover { color: var(--cor-primaria-escura); }
 
 .acao-modal { margin: var(--espaco-2) 0 0; }
+
+/* Gráfico de resultados (grafico.js + Chart.js). O canvas não tem tamanho
+   próprio: ocupa a .grafico-area, que define a altura. A tabela fica num
+   details; se a biblioteca não carregar, a área do gráfico some. */
+.grafico { margin: 0 0 var(--espaco-3); }
+
+.grafico-area {
+  position: relative;
+  height: var(--grafico-altura);
+}
+
+.grafico--indisponivel .grafico { display: none; }
+
+.grafico-dados summary {
+  cursor: pointer;
+  color: var(--cor-primaria);
+  text-decoration: underline;
+}
+
+/* Histórico de envios guardado no navegador (persistencia.js):
+   nome em destaque, forma de apoio e data em linhas menores */
+.lista-envios {
+  margin: 0 0 var(--espaco-3);
+  padding: 0;
+  list-style: none;
+}
+
+.lista-envios li {
+  display: flex;
+  flex-direction: column;
+  padding: var(--espaco-2) 0;
+  border-bottom: var(--borda-fina) solid var(--cor-borda);
+}
+
+.lista-envios span {
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-suave);
+}
 
 /* Sem JavaScript, gatilhos de modal e toast não fariam nada: somem */
 html:not(.js) [data-abre-modal],
