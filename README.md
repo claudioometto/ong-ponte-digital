@@ -4,8 +4,8 @@ Site institucional de uma organização do terceiro setor que forma jovens de 14
 periferias de Campinas/SP em tecnologia. É uma SPA (Single Page Application) em HTML, CSS e
 JavaScript puros, sem framework, com cadastro de doadores e voluntários.
 
-- **Produção:** endereço publicado na etapa de deploy (issue #11)
-- **Versão atual:** 3.0.0 — histórico em [CHANGELOG.md](CHANGELOG.md) e nas [releases](https://github.com/claudioometto/ong-ponte-digital/releases)
+- **Produção:** https://ong-ponte-digital.vercel.app (Vercel, publicado a cada release na `main`)
+- **Versão atual:** 3.1.0 — histórico em [CHANGELOG.md](CHANGELOG.md) e nas [releases](https://github.com/claudioometto/ong-ponte-digital/releases)
 - **Projeto acadêmico:** Experiências Práticas de Desenvolvimento Front-end (Análise e Desenvolvimento de Sistemas)
 
 ## Sumário

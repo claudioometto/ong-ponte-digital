@@ -3,14 +3,17 @@
 Todas as mudanças relevantes do projeto. Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/);
 versões no padrão [SemVer](https://semver.org/lang/pt-BR/).
 
-## [Não lançado] — previsto como 3.1.0
+## [Não lançado]
+
+## [3.1.0] — 2026-10-04 · Versionamento, acessibilidade e produção
 
 ### Adicionado
-- Build de produção (`npm run build`): JavaScript em um único arquivo, CSS e HTML minificados; 32% menor no total
+- Build de produção (`npm run build`): JavaScript em um único arquivo, CSS e HTML minificados; código 43% menor (HTML, CSS e JS)
 - Servidor local sem dependências (`npm run dev` e `npm run preview`)
 - Testes de ponta a ponta e auditoria WCAG 2.1 AA com Playwright e axe-core (`npm test`)
 - README com instalação, uso, build, testes, arquitetura e fluxo de manutenção
 - Modelos de issue e pull request; `.gitignore`
+- Deploy na Vercel a partir da `main` (`vercel.json`: build, pasta `dist/`, cabeçalhos de segurança e cache de imagens)
 - Link "Pular para o conteúdo" (WCAG 2.4.1)
 - Temas escuro e alto contraste, automáticos pelo sistema ou pelo seletor "Tema"; suporte a `forced-colors`
 - Fotos em AVIF, WebP e JPEG otimizados (`npm run imagens`), com `srcset`, `loading="lazy"` e `fetchpriority`; SVGs otimizados no build. Fotos 65% menores em AVIF
@@ -56,7 +59,8 @@ versões no padrão [SemVer](https://semver.org/lang/pt-BR/).
 - Validação nativa do formulário e máscaras de CPF, telefone e CEP
 - Imagens responsivas com `picture` (WebP + JPG)
 
-[Não lançado]: https://github.com/claudioometto/ong-ponte-digital/compare/v3.0.0...develop
+[Não lançado]: https://github.com/claudioometto/ong-ponte-digital/compare/v3.1.0...develop
+[3.1.0]: https://github.com/claudioometto/ong-ponte-digital/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/claudioometto/ong-ponte-digital/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/claudioometto/ong-ponte-digital/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/claudioometto/ong-ponte-digital/releases/tag/v1.0.0
