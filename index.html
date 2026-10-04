@@ -5,17 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Instituto Ponte Digital: ONG que forma jovens de 14 a 24 anos das periferias de Campinas em tecnologia e os conecta ao primeiro emprego.">
   <title>Instituto Ponte Digital | Educação em tecnologia para a juventude periférica</title>
-  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="imagens/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
   <!-- Marca que o JavaScript está ativo: só então o CSS recolhe o menu -->
   <script>document.documentElement.classList.add('js');</script>
+  <!-- Ponto de entrada da SPA. Módulo ES: carrega depois do HTML e importa o resto de js/ -->
+  <script type="module" src="js/app.js"></script>
 </head>
 <body>
 
+  <!--
+    Casca da SPA: cabeçalho e rodapé ficam fixos; só o conteúdo de main#app
+    é trocado pelo roteador, a partir dos fragmentos da pasta html/.
+  -->
+
   <!-- Cabeçalho institucional: identidade + navegação primária -->
   <header class="site-header">
-    <a class="brand" href="index.html">
-      <img src="assets/img/logo.svg" alt="Instituto Ponte Digital" width="48" height="48">
+    <a class="brand" href="#/">
+      <img src="imagens/logo.svg" alt="Instituto Ponte Digital" width="48" height="48">
       <span class="brand-name">Instituto Ponte Digital</span>
     </a>
 
@@ -27,118 +34,30 @@
       </button>
 
       <ul class="menu" id="menu-principal">
-        <li><a href="index.html" aria-current="page">Início</a></li>
+        <li><a href="#/">Início</a></li>
         <li class="tem-submenu">
-          <a href="projetos.html">Projetos sociais</a>
+          <a href="#/projetos">Projetos sociais</a>
           <button type="button" class="submenu-botao" aria-expanded="false" aria-controls="submenu-projetos">
             <span class="visually-hidden">Submenu de Projetos sociais</span>
           </button>
+          <!-- Os links de cada projeto são gerados de js/dados/projetos.js -->
           <ul class="submenu" id="submenu-projetos">
-            <li><a href="projetos.html#codigo-na-quebrada">Código na Quebrada</a></li>
-            <li><a href="projetos.html#dados-que-transformam">Dados que Transformam</a></li>
-            <li><a href="projetos.html#maes-conectadas">Mães Conectadas</a></li>
-            <li><a href="projetos.html#doacao">Campanhas de doação</a></li>
-            <li><a href="projetos.html#voluntariado">Frentes de voluntariado</a></li>
+            <li><a href="#/projetos/doacao">Campanhas de doação</a></li>
+            <li><a href="#/projetos/voluntariado">Frentes de voluntariado</a></li>
           </ul>
         </li>
-        <li><a href="cadastro.html">Seja apoiador</a></li>
+        <li><a href="#/cadastro">Seja apoiador</a></li>
       </ul>
     </nav>
   </header>
 
-  <main class="grade">
-
-    <!-- Bloco de abertura: h1 único da página -->
-    <section class="hero grade" aria-labelledby="titulo-principal">
-      <h1 id="titulo-principal">Tecnologia que encurta a distância entre a periferia e o primeiro emprego</h1>
-      <p>
-        O Instituto Ponte Digital forma jovens de 14 a 24 anos das regiões periféricas de Campinas (SP)
-        em programação, dados e cidadania digital — e os acompanha até a contratação.
-      </p>
-      <p><a class="btn" href="cadastro.html">Quero doar ou ser voluntário</a></p>
-
-      <!-- Imagem informativa: alt descreve a cena, pois ela agrega informação ao texto -->
-      <picture>
-        <source srcset="assets/img/hero-turma.webp" type="image/webp">
-        <img class="hero-img"
-             src="assets/img/hero-turma.jpg"
-             alt="Cinco jovens lado a lado em frente a notebooks durante uma aula do projeto Código na Quebrada"
-             width="960" height="420">
-      </picture>
-    </section>
-
-    <section aria-labelledby="quem-somos">
-      <h2 id="quem-somos">Quem somos</h2>
-      <p>
-        Somos uma organização da sociedade civil sem fins lucrativos, fundada em 2016 por educadores e
-        profissionais de tecnologia. Atuamos em quatro bairros com turmas gratuitas, equipamento emprestado
-        e auxílio-transporte, porque entendemos que acesso não se resolve só com aula.
-      </p>
-
-      <h3>Missão</h3>
-      <p>Garantir que a origem do jovem não determine seu repertório técnico nem seu acesso ao mercado de trabalho.</p>
-
-      <figure>
-        <picture>
-          <source srcset="assets/img/equipe.webp" type="image/webp">
-          <img src="assets/img/equipe.jpg"
-               alt="Educadores e mentores voluntários reunidos na sede do instituto"
-               width="640" height="400">
-        </picture>
-        <figcaption>Equipe fixa e mentores voluntários do núcleo Jardim São Marcos, em 2025.</figcaption>
-      </figure>
-
-      <h3>Como trabalhamos</h3>
-      <ul>
-        <li>Turmas presenciais gratuitas em espaços cedidos por escolas públicas parceiras;</li>
-        <li>Mentoria individual com profissionais voluntários da área de tecnologia;</li>
-        <li>Encaminhamento para vagas de estágio e aprendiz em empresas parceiras.</li>
-      </ul>
-    </section>
-
-    <section class="grade cartoes" aria-labelledby="impacto">
-      <h2 id="impacto">Nosso impacto em 2025</h2>
-
-      <article class="card">
-        <h3>Jovens formados</h3>
-        <p><strong>412</strong> concluintes em trilhas de desenvolvimento web e análise de dados.</p>
-      </article>
-
-      <article class="card">
-        <h3>Inserção no mercado</h3>
-        <p><strong>63%</strong> dos concluintes empregados ou estagiando em até 12 meses.</p>
-      </article>
-
-      <article class="card">
-        <h3>Rede de voluntários</h3>
-        <p><strong>128</strong> mentores ativos distribuídos em 4 núcleos comunitários.</p>
-      </article>
-    </section>
-
-    <section class="area-principal" aria-labelledby="como-apoiar">
-      <h2 id="como-apoiar">Como apoiar</h2>
-
-      <h3>Doação recorrente</h3>
-      <p>R$ 50 por mês cobrem o auxílio-transporte de um estudante durante um semestre letivo.</p>
-
-      <h3>Voluntariado</h3>
-      <p>Duas horas semanais de mentoria técnica ou apoio administrativo, presencial ou a distância.</p>
-
-      <h3>Parceria empresarial</h3>
-      <p>Cessão de equipamentos, bolsas de estudo ou abertura de vagas de aprendiz e estágio.</p>
-    </section>
-
-    <!-- Conteúdo complementar, relacionado mas não essencial à leitura principal -->
-    <aside class="area-lateral" aria-labelledby="transparencia">
-      <!-- Imagem puramente decorativa: alt vazio para o leitor de tela ignorá-la -->
-      <img src="assets/img/ornamento.svg" alt="" width="64" height="64">
-      <h2 id="transparencia">Transparência</h2>
-      <p>
-        Publicamos trimestralmente o demonstrativo de receitas e despesas, auditado por contabilidade
-        voluntária. Em 2025, 82% dos recursos foram aplicados diretamente em atividade-fim.
-      </p>
-    </aside>
-
+  <main class="grade" id="app">
+    <noscript>
+      <section>
+        <h1>Instituto Ponte Digital</h1>
+        <p>Este site precisa de JavaScript para exibir as páginas. Ative-o no navegador ou fale conosco pelo e-mail contato@pontedigital.org.br.</p>
+      </section>
+    </noscript>
   </main>
 
   <footer class="site-footer grade">
@@ -153,16 +72,62 @@
 
     <nav aria-label="Navegação do rodapé">
       <ul class="menu">
-        <li><a href="index.html">Início</a></li>
-        <li><a href="projetos.html">Projetos sociais</a></li>
-        <li><a href="cadastro.html">Seja apoiador</a></li>
-        <li><a href="componentes.html">Guia de componentes</a></li>
+        <li><a href="#/">Início</a></li>
+        <li><a href="#/projetos">Projetos sociais</a></li>
+        <li><a href="#/cadastro">Seja apoiador</a></li>
+        <li><a href="#/componentes">Guia de componentes</a></li>
       </ul>
     </nav>
 
     <p><small>&copy; 2026 Instituto Ponte Digital. Organização da sociedade civil sem fins lucrativos.</small></p>
   </footer>
 
-  <script src="assets/js/menu.js"></script>
+  <!--
+    Templates: marcação dos componentes repetidos. O conteúdo de um elemento
+    template não aparece na tela; js/templates/ clona e preenche os data-campo.
+  -->
+  <template id="tpl-projeto">
+    <article class="projeto">
+      <h3 data-campo="nome"></h3>
+      <ul class="badges" aria-label="Situação do projeto" data-campo="badges"></ul>
+      <figure>
+        <picture>
+          <source type="image/webp" data-campo="imagem-webp">
+          <img data-campo="imagem" alt="" width="480" height="270">
+        </picture>
+        <figcaption data-campo="legenda"></figcaption>
+      </figure>
+
+      <h4>O que é</h4>
+      <p data-campo="descricao"></p>
+
+      <h4>Quem atende</h4>
+      <p data-campo="publico"></p>
+
+      <h4>Resultados em 2025</h4>
+      <ul data-campo="resultados"></ul>
+
+      <p><a href="#/cadastro/tipo-apoio" data-campo="apoiar"></a></p>
+    </article>
+  </template>
+
+  <template id="tpl-indicador">
+    <article class="card">
+      <h3 data-campo="titulo"></h3>
+      <p><strong data-campo="valor"></strong></p>
+    </article>
+  </template>
+
+  <template id="tpl-envio">
+    <li>
+      <strong data-campo="nome"></strong>
+      <span data-campo="detalhe"></span>
+      <span data-campo="data"></span>
+    </li>
+  </template>
+
+  <!-- Região dos toasts: aria-live anuncia cada notificação sem tirar o foco de onde está -->
+  <div class="toasts" aria-live="polite"></div>
+
 </body>
 </html>

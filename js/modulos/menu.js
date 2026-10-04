@@ -5,11 +5,11 @@
   dos botões do menu. Toda a aparência (ocultar, mostrar, animar) é do CSS,
   que lê esse atributo. Sem este script, o menu fica sempre aberto e os
   submenus abrem por :hover e :focus-within — nenhum link se perde.
+
+  O cabeçalho é fixo na SPA: iniciarMenu() roda uma vez só, em app.js.
 */
 
-(function () {
-  'use strict';
-
+export function iniciarMenu() {
   var desktop = window.matchMedia('(min-width: 48em)');
   var nav = document.querySelector('.nav-principal');
   if (!nav) return;
@@ -72,4 +72,4 @@
 
   /* Ao cruzar o ponto de quebra de 768px, o menu recomeça fechado */
   desktop.addEventListener('change', fecharTudo);
-})();
+}
