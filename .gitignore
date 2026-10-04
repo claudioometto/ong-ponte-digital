@@ -11,3 +11,7 @@ Thumbs.db
 desktop.ini
 .vscode/
 *.log
+
+# Relatórios de teste (Playwright)
+test-results/
+playwright-report/
