@@ -40,8 +40,15 @@ const NAO_ENCONTRADA = {
   descricao: 'O endereço acessado não existe no site do Instituto Ponte Digital.'
 };
 
+/* Rotas começam com "#/". Um hash sem a barra ("#app", do link "Pular para o
+   conteúdo") é âncora comum: o navegador já rolou e focou o alvo sozinho. */
+function ehRota(hash) {
+  return hash === '' || hash.startsWith('#/');
+}
+
 /* "#/projetos/doacao" -> { nome: 'projetos', ancora: 'doacao' } */
 function lerHash() {
+  if (!ehRota(location.hash)) return { nome: '', ancora: '' };
   const partes = location.hash.replace(/^#\/?/, '').split('/');
   return { nome: partes[0] || '', ancora: partes[1] || '' };
 }
@@ -82,6 +89,10 @@ export function iniciarRoteador({ alvo, aoCarregar }) {
   let primeiraCarga = true;
 
   async function navegar() {
+    /* Âncora comum com uma tela já aberta: não é troca de tela. Sem tela
+       (endereço aberto já com "#app"), segue e carrega o início. */
+    if (!ehRota(location.hash) && telaAtual !== null) return;
+
     const { nome, ancora } = lerHash();
 
     /* Mesma tela, outra âncora: só rola, sem buscar o fragmento de novo */

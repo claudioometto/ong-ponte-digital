@@ -14,6 +14,10 @@
 </head>
 <body>
 
+  <!-- Primeiro item do Tab: pula cabeçalho e menu, que se repetem em toda tela (WCAG 2.4.1).
+       Fica fora da tela até receber foco. -->
+  <a class="pular-conteudo" href="#app">Pular para o conteúdo</a>
+
   <!--
     Casca da SPA: cabeçalho e rodapé ficam fixos; só o conteúdo de main#app
     é trocado pelo roteador, a partir dos fragmentos da pasta html/.
@@ -51,7 +55,8 @@
     </nav>
   </header>
 
-  <main class="grade" id="app">
+  <!-- tabindex="-1": o link "Pular para o conteúdo" consegue levar o foco até aqui -->
+  <main class="grade" id="app" tabindex="-1">
     <noscript>
       <section>
         <h1>Instituto Ponte Digital</h1>

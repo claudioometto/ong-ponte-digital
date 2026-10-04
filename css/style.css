@@ -195,6 +195,24 @@ img { max-width: 100%; height: auto; }
    tela anunciar a troca de tela. Não são clicáveis: o anel confundiria. */
 [tabindex="-1"]:focus { outline: none; }
 
+/* Link "Pular para o conteúdo": fora da tela até receber foco pelo Tab;
+   então aparece no topo, sobre o cabeçalho (WCAG 2.4.1). */
+.pular-conteudo {
+  position: absolute;
+  top: var(--espaco-2);
+  left: var(--espaco-2);
+  z-index: 100;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-primaria-escura);
+  color: var(--cor-fundo);
+  font-weight: 700;
+  transform: translateY(-200%);
+}
+
+.pular-conteudo:focus { transform: none; }
+.pular-conteudo:hover { color: var(--cor-fundo); }
+
 
 /* 3. Layout — moldura da página e grade de 12 colunas
    -------------------------------------------------------------------------- */
