@@ -162,6 +162,12 @@ Gera o build, sobe a prévia e roda a suíte do Playwright contra ela, em deskto
 | `tests/acessibilidade.spec.js` | axe-core com as regras WCAG 2.1 A e AA nas cinco telas, nos três temas |
 | `tests/tema.spec.js` | Preferência do sistema, seletor, persistência, contraste medido por tema e modo de cores forçadas |
 
+Para conferir o site publicado, a mesma suíte roda contra o endereço de produção, sem servidor local:
+
+```bash
+BASE_URL=https://ong-ponte-digital.vercel.app npm test
+```
+
 Um teste marcado com `test.fail` documenta uma falha conhecida e ligada a uma issue: a suíte segue
 verde e, quando a falha for corrigida, o Playwright avisa que o teste passou e a marcação deve sair.
 
