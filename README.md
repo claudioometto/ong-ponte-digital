@@ -128,6 +128,23 @@ A foto do topo tem `fetchpriority="high"` (é a maior imagem visível ao abrir);
 `loading="lazy"` e só são baixadas quando a pessoa rola até perto delas. Todas declaram `width` e
 `height`, o que evita salto de layout.
 
+### Desempenho medido
+
+Lighthouse 13.5, perfil móvel (4G lento e CPU 4x mais lenta, simulados), tela inicial, mediana de 3
+execuções, comparando a v3.0.0 (sem build) com o build atual, os dois no mesmo servidor local:
+
+| Métrica | v3.0.0 | Build atual |
+|---|---|---|
+| Nota de performance | 82 | 100 |
+| First Contentful Paint | 1,35 s | 1,05 s |
+| Largest Contentful Paint | 1,88 s | 1,43 s |
+| Cumulative Layout Shift | 0,354 | 0 |
+| Bytes transferidos | 110 KB | 66 KB |
+| Requisições | 23 | 9 |
+
+O CLS vinha do rodapé, empurrado para baixo quando a tela da SPA chegava; o `main` passou a
+reservar a altura da janela (issue #22).
+
 ## Testes
 
 ```bash

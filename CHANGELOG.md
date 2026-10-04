@@ -20,6 +20,7 @@ versões no padrão [SemVer](https://semver.org/lang/pt-BR/).
 - Campo de data perdia o anel de foco no ícone do calendário (#13)
 - Foco caía no `body` ao fechar toast ou alerta, descartar o rascunho, apagar o histórico e durante o envio do cadastro
 - Link do logotipo era lido com o nome duplicado; rótulos obrigatórios eram lidos com "asterisco"
+- Rodapé deslocava a página quando a tela da SPA chegava (CLS 0,354 → 0) (#22)
 
 ### Alterado
 - Submenu do desktop abre pela seta (Enter ou Espaço), não mais quando o foco chega ao link
