@@ -1,0 +1,13 @@
+# Dependências e saída de build
+node_modules/
+dist/
+
+# Deploy
+.vercel/
+
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+*.log
