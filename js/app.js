@@ -12,7 +12,7 @@
                  └─> servicos/    rede e armazenamento, sem DOM
                  └─> dados/       conteúdo puro, sem lógica
 
-  - O que vale para o site inteiro (menu, toasts) é iniciado uma vez.
+  - O que vale para o site inteiro (menu, tema, toasts) é iniciado uma vez.
   - O que depende do conteúdo da tela é preparado a cada troca, porque o
     roteador substitui o HTML de main#app.
 */
@@ -25,10 +25,12 @@ import { aplicarPersistencia } from './modulos/persistencia.js';
 import { aplicarCadastro } from './modulos/cadastro.js';
 import { aplicarGrafico } from './modulos/grafico.js';
 import { renderizarComponentes, preencherSubmenuProjetos } from './templates/componentes.js';
+import { iniciarTema } from './modulos/tema.js';
 import { iniciarRoteador } from './roteador.js';
 
 preencherSubmenuProjetos();
 iniciarMenu();
+iniciarTema();
 iniciarFeedback();
 
 iniciarRoteador({

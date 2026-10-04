@@ -32,6 +32,7 @@ JavaScript puros, sem framework, com cadastro de doadores e voluntários.
 - **Rascunho automático** do cadastro e histórico dos últimos envios no navegador
 - **Componentes de feedback** (alertas, badges, toast, modal) documentados no guia em `#/componentes`
 - **Layout responsivo** do celular ao monitor largo, com menu hambúrguer abaixo de 768px
+- **Temas claro, escuro e alto contraste**: seguem o sistema ou a escolha no seletor "Tema" do menu
 
 ## Tecnologias
 
@@ -119,7 +120,8 @@ Gera o build, sobe a prévia e roda a suíte do Playwright contra ela, em deskto
 | `tests/teclado.spec.js` | Link de pular, menu do celular com Enter e Esc, submenu do desktop pela seta, foco visível em todo o formulário |
 | `tests/foco-leitor.spec.js` | Foco nunca cai no `body` (toast, alerta, rascunho, histórico, envio) e nomes acessíveis sem duplicação nem asterisco |
 | `tests/cadastro.spec.js` | Mensagens de erro, CPF com dígito verificador, máscara, rascunho que não guarda o CPF |
-| `tests/acessibilidade.spec.js` | axe-core com as regras WCAG 2.1 A e AA nas cinco telas |
+| `tests/acessibilidade.spec.js` | axe-core com as regras WCAG 2.1 A e AA nas cinco telas, nos três temas |
+| `tests/tema.spec.js` | Preferência do sistema, seletor, persistência, contraste medido por tema e modo de cores forçadas |
 
 Um teste marcado com `test.fail` documenta uma falha conhecida e ligada a uma issue: a suíte segue
 verde e, quando a falha for corrigida, o Playwright avisa que o teste passou e a marcação deve sair.
@@ -176,6 +178,7 @@ submenu e a barra do gráfico aparecem sozinhos.
 |---|---|
 | `ponte-digital:rascunho` | Cadastro em andamento. Apagado no envio, no "Limpar formulário" e no "Descartar rascunho" |
 | `ponte-digital:envios` | Últimos 5 cadastros enviados neste navegador: data, nome, forma de apoio, projeto e protocolo |
+| `ponte-digital:tema` | Tema escolhido no seletor (`claro`, `escuro` ou `alto-contraste`). Sem a chave, vale o do sistema |
 
 Senha, CPF e aceite da LGPD nunca são gravados.
 
@@ -192,6 +195,15 @@ Meta: WCAG 2.1 nível AA.
 - Nomes acessíveis limpos: logotipo com `alt=""` ao lado do nome em texto; asterisco dos rótulos com `aria-hidden` (o `required` já anuncia "obrigatório")
 - Formulário: `label` em todo campo, grupos em `fieldset`/`legend`, erros ligados por `aria-describedby` e marcados com `aria-invalid`
 - Toasts em região `aria-live`; movimento reduzido respeitado (`prefers-reduced-motion`)
+- Temas por tokens de cor (`css/style.css`, seção 1b), aplicados em `<html data-tema>` antes da pintura:
+
+  | Tema | Quando vale | Menor contraste medido |
+  |---|---|---|
+  | Claro | Padrão | 4,8:1 |
+  | Escuro | Escolha no seletor ou `prefers-color-scheme: dark` | 5,6:1 |
+  | Alto contraste | Escolha no seletor ou `prefers-contrast: more` (tem prioridade) | 10,3:1 |
+
+  No alto contraste: preto, branco, amarelo e ciano, links sempre sublinhados e anel de foco de 4px. O modo de cores forçadas do Windows (`forced-colors`) também é tratado.
 - Verificação: axe-core automático nas cinco telas (`npm test`) e W3C Nu Html Checker sem erros
 
 Falhas abertas ficam na milestone [Etapa 3 · Acessibilidade WCAG 2.1 AA](https://github.com/claudioometto/ong-ponte-digital/milestones).

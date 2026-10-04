@@ -12,6 +12,7 @@ versões no padrão [SemVer](https://semver.org/lang/pt-BR/).
 - README com instalação, uso, build, testes, arquitetura e fluxo de manutenção
 - Modelos de issue e pull request; `.gitignore`
 - Link "Pular para o conteúdo" (WCAG 2.4.1)
+- Temas escuro e alto contraste, automáticos pelo sistema ou pelo seletor "Tema"; suporte a `forced-colors`
 
 ### Corrigido
 - Âncora comum (`#app`) era tratada como rota e mostrava "Página não encontrada"
