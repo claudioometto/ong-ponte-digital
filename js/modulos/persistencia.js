@@ -16,6 +16,7 @@
 
 import { ler, gravar, remover } from '../servicos/armazenamento.js';
 import { campo, renderizarLista } from '../templates/renderizar.js';
+import { moverFoco, toast } from './feedback.js';
 
 const NAO_GRAVAR = ['cpf', 'senha', 'lgpd'];
 const LIMITE_ENVIOS = 5;
@@ -138,7 +139,12 @@ export function aplicarPersistencia(raiz) {
     aviso.hidden = true;
   });
 
-  raiz.querySelector('#descartar-rascunho').addEventListener('click', () => form.reset());
+  /* O aviso some com o reset, levando o botão junto: o foco vai ao primeiro
+     campo, onde a pessoa recomeça (sem isto, caía no body) */
+  raiz.querySelector('#descartar-rascunho').addEventListener('click', () => {
+    form.reset();
+    moverFoco(form.querySelector('input, select, textarea'));
+  });
 
   /* cadastro.js avisa quando o servidor confirma o envio, antes de limpar */
   form.addEventListener('envio-concluido', (evento) => {
@@ -146,8 +152,11 @@ export function aplicarPersistencia(raiz) {
     mostrarEnvios(secaoEnvios);
   });
 
+  /* A seção do histórico some: o foco sobe para o título da coluna lateral */
   raiz.querySelector('#apagar-envios').addEventListener('click', () => {
     remover('envios');
     mostrarEnvios(secaoEnvios);
+    moverFoco(secaoEnvios.closest('aside').querySelector('h2'));
+    toast('info', 'Histórico apagado', 'Os envios deste navegador foram removidos.');
   });
 }
