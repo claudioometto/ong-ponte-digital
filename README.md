@@ -275,6 +275,14 @@ Falhas abertas ficam na milestone [Etapa 3 · Acessibilidade WCAG 2.1 AA](https:
 5. Pull request para `develop`, preenchendo o modelo e citando `Resolve #n`
 6. Revisão e merge por merge commit (squash e rebase estão desativados no repositório)
 
+### Integração e entrega contínuas
+
+| Etapa | Onde | O que acontece |
+|---|---|---|
+| CI | GitHub Actions (`.github/workflows/testes.yml`) | Em todo pull request e em todo push em `develop` e `main`: `npm ci`, Chromium do Playwright, `npm test` (build + suíte inteira). Falha bloqueia o merge |
+| CD | Vercel (`vercel.json`) | Push na `main` publica a produção; qualquer outra branch ou PR ganha um link de prévia |
+| Conferência | Local | `BASE_URL=https://ong-ponte-digital.vercel.app npm test` roda a suíte contra a produção |
+
 ### Lançar uma versão
 
 O projeto segue o [versionamento semântico](https://semver.org/lang/pt-BR/): MAIOR quando quebra

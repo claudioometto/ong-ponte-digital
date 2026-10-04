@@ -5,6 +5,9 @@ versões no padrão [SemVer](https://semver.org/lang/pt-BR/).
 
 ## [Não lançado]
 
+### Adicionado
+- Integração contínua no GitHub Actions: build e suíte de testes em todo PR e push em `develop` e `main`
+
 ## [3.1.0] — 2026-10-04 · Versionamento, acessibilidade e produção
 
 ### Adicionado
