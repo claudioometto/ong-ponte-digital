@@ -346,6 +346,12 @@ body {
 
 .site-header { grid-area: cabecalho; }
 main         { grid-area: conteudo; }
+
+/* O conteúdo da SPA chega depois da primeira pintura (fetch do fragmento).
+   Com o main vazio, o rodapé aparecia na tela e era empurrado para baixo
+   quando a tela entrava: CLS 0,354 no Lighthouse (issue #22). Reservando
+   ao menos a altura da janela, o rodapé já nasce abaixo da dobra. */
+.js main { min-height: 100vh; }
 .site-footer { grid-area: rodape; }
 
 /* Contêiner sem div extra: a margem lateral cresce até centralizar o

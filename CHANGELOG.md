@@ -13,12 +13,14 @@ versões no padrão [SemVer](https://semver.org/lang/pt-BR/).
 - Modelos de issue e pull request; `.gitignore`
 - Link "Pular para o conteúdo" (WCAG 2.4.1)
 - Temas escuro e alto contraste, automáticos pelo sistema ou pelo seletor "Tema"; suporte a `forced-colors`
+- Fotos em AVIF, WebP e JPEG otimizados (`npm run imagens`), com `srcset`, `loading="lazy"` e `fetchpriority`; SVGs otimizados no build. Fotos 65% menores em AVIF
 
 ### Corrigido
 - Âncora comum (`#app`) era tratada como rota e mostrava "Página não encontrada"
 - Campo de data perdia o anel de foco no ícone do calendário (#13)
 - Foco caía no `body` ao fechar toast ou alerta, descartar o rascunho, apagar o histórico e durante o envio do cadastro
 - Link do logotipo era lido com o nome duplicado; rótulos obrigatórios eram lidos com "asterisco"
+- Rodapé deslocava a página quando a tela da SPA chegava (CLS 0,354 → 0) (#22)
 
 ### Alterado
 - Submenu do desktop abre pela seta (Enter ou Espaço), não mais quando o foco chega ao link

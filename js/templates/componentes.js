@@ -23,7 +23,9 @@ function preencherProjeto(copia, projeto) {
     campo(copia, 'badges').append(li);
   });
 
-  const base = 'imagens/' + projeto.imagem.arquivo;
+  /* Gerados por scripts/imagens.mjs na largura dos cartões (480px) */
+  const base = 'imagens/' + projeto.imagem.arquivo + '-480';
+  campo(copia, 'imagem-avif').srcset = base + '.avif';
   campo(copia, 'imagem-webp').srcset = base + '.webp';
   const img = campo(copia, 'imagem');
   img.src = base + '.jpg';

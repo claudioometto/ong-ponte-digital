@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "node scripts/servidor.mjs . 8080",
+    "imagens": "node scripts/imagens.mjs",
     "build": "node scripts/build.mjs",
     "preview": "node scripts/servidor.mjs dist 4173",
     "test": "playwright test",
@@ -23,6 +24,8 @@
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
     "esbuild": "^0.28.2",
-    "html-minifier-terser": "^7.2.0"
+    "html-minifier-terser": "^7.2.0",
+    "sharp": "^0.35.5",
+    "svgo": "^4.1.0"
   }
 }
