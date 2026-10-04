@@ -11,6 +11,11 @@ versões no padrão [SemVer](https://semver.org/lang/pt-BR/).
 - Testes de ponta a ponta e auditoria WCAG 2.1 AA com Playwright e axe-core (`npm test`)
 - README com instalação, uso, build, testes, arquitetura e fluxo de manutenção
 - Modelos de issue e pull request; `.gitignore`
+- Link "Pular para o conteúdo" (WCAG 2.4.1)
+
+### Corrigido
+- Âncora comum (`#app`) era tratada como rota e mostrava "Página não encontrada"
+- Campo de data perdia o anel de foco no ícone do calendário (#13)
 
 ## [3.0.0] — 2026-10-04 · JavaScript e SPA
 

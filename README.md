@@ -182,6 +182,7 @@ Senha, CPF e aceite da LGPD nunca são gravados.
 
 Meta: WCAG 2.1 nível AA.
 
+- Link "Pular para o conteúdo" como primeiro item do Tab, levando o foco ao `main` (o roteador ignora âncoras que não começam com `#/`)
 - Hierarquia de títulos sem saltos, um `h1` por tela, regiões nomeadas (`aria-labelledby`, `aria-label` em cada `nav`)
 - Troca de tela anunciada: o roteador leva o foco ao `h1` e atualiza o título da aba
 - Foco sempre visível (anel de 3px), menu e submenu operáveis por teclado, Esc fecha e devolve o foco
